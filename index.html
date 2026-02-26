@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Topicz — Online Growth Discovery</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand: #1a1a2e;
+    --accent: #e94560;
+    --accent2: #0f3460;
+    --light: #f8f9fc;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --success: #10b981;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--accent2) 100%);
+    color: white;
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  header .logo { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.7; margin-bottom: 12px; }
+  header h1 { font-size: clamp(26px, 5vw, 42px); font-weight: 800; line-height: 1.2; }
+  header p { margin-top: 12px; opacity: 0.8; font-size: 16px; max-width: 540px; margin-left: auto; margin-right: auto; }
+  header .meta { margin-top: 24px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  header .meta span { background: rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px; font-size: 13px; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  .intro-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    border-left: 4px solid var(--accent);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .intro-card h2 { font-size: 17px; color: var(--accent); margin-bottom: 8px; }
+  .intro-card p { color: var(--muted); font-size: 15px; }
+
+  .section {
+    background: white;
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .section-header {
+    background: linear-gradient(90deg, var(--brand), var(--accent2));
+    color: white;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-header .num {
+    background: var(--accent);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 16px; font-weight: 700; }
+
+  .section-body { padding: 8px 0; }
+
+  .q {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .q:last-child { border-bottom: none; }
+
+  .q-label {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .q-num {
+    background: var(--light);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-top: 2px;
+    border: 1px solid var(--border);
+  }
+  label { font-size: 15px; font-weight: 600; color: var(--text); cursor: default; }
+
+  .q-hint { font-size: 13px; color: var(--muted); margin-bottom: 10px; font-style: italic; }
+
+  input[type="text"], input[type="email"], input[type="number"], select, textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--light);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+    resize: vertical;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(233,69,96,0.1);
+    background: white;
+  }
+
+  .radio-group, .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .radio-group label, .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 400;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--light);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .radio-group label:hover, .checkbox-group label:hover {
+    border-color: var(--accent);
+    background: #fff5f7;
+  }
+  input[type="radio"]:checked + span, input[type="checkbox"]:checked + span { color: var(--accent); font-weight: 600; }
+
+  .scale-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .scale-row label {
+    flex: 1;
+    min-width: 44px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: var(--light);
+    transition: all 0.15s;
+  }
+  .scale-row input[type="radio"] { display: none; }
+  .scale-row input[type="radio"]:checked + label {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .submit-zone {
+    background: white;
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .submit-zone p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), #c0392b);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 40px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 15px rgba(233,69,96,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(233,69,96,0.45); }
+  .btn-primary:active { transform: translateY(0); }
+
+  #copy-feedback {
+    display: none;
+    margin-top: 16px;
+    background: #f0fdf4;
+    border: 1.5px solid var(--success);
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 14px;
+    color: #166534;
+  }
+  #copy-feedback strong { display: block; margin-bottom: 4px; }
+
+  .privacy { text-align: center; margin-top: 32px; font-size: 13px; color: var(--muted); }
+  .privacy a { color: var(--muted); }
+
+  @media (max-width: 600px) {
+    .q { padding: 16px 18px; }
+    .section-header { padding: 14px 18px; }
+    .submit-zone { padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Topicz</div>
+  <h1>Online Growth Discovery</h1>
+  <p>Help us understand where you are today and where you want to go — so we can build the right roadmap together.</p>
+  <div class="meta">
+    <span>⏱ ~10 minutes</span>
+    <span>📋 30 questions</span>
+    <span>🔒 Confidential</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="intro-card">
+    <h2>Before you begin</h2>
+    <p>There are no right or wrong answers. Be as candid as possible — the more honest you are about where things stand today, the better we can tailor our recommendations. When you finish, click the button at the bottom to generate a summary you can email directly to us.</p>
+  </div>
+
+  <form id="discovery-form">
+
+    <!-- SECTION 1 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">1</div>
+        <h2>Business Overview</h2>
+      </div>
+      <div class="section-body">
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q1</span><label>What does Topicz sell, and to whom?</label></div>
+          <div class="q-hint">Product categories, customer type (consumer/wholesale/B2B), geography.</div>
+          <textarea name="q1" rows="3" placeholder="E.g. We sell [products] primarily to [customers] across [region]..."></textarea>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q2</span><label>What is your approximate annual revenue?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q2" value="Under $1M" /><span>Under $1M</span></label>
+            <label><input type="radio" name="q2" value="$1M – $5M" /><span>$1M – $5M</span></label>
+            <label><input type="radio" name="q2" value="$5M – $20M" /><span>$5M – $20M</span></label>
+            <label><input type="radio" name="q2" value="$20M – $50M" /><span>$20M – $50M</span></label>
+            <label><input type="radio" name="q2" value="$50M+" /><span>$50M+</span></label>
+            <label><input type="radio" name="q2" value="Prefer not to say" /><span>Prefer not to say</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q3</span><label>What percentage of revenue currently comes from online channels?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q3" value="0% – we don't sell online yet" /><span>0% — we don't sell online yet</span></label>
+            <label><input type="radio" name="q3" value="Less than 10%" /><span>Less than 10%</span></label>
+            <label><input type="radio" name="q3" value="10–30%" /><span>10–30%</span></label>
+            <label><input type="radio" name="q3" value="30–60%" /><span>30–60%</span></label>
+            <label><input type="radio" name="q3" value="More than 60%" /><span>More than 60%</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q4</span><label>Do you operate brick-and-mortar locations?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q4" value="No – online only" /><span>No — online only</span></label>
+            <label><input type="radio" name="q4" value="Yes – 1 to 5 locations" /><span>Yes — 1 to 5 locations</span></label>
+            <label><input type="radio" name="q4" value="Yes – 6 to 20 locations" /><span>Yes — 6 to 20 locations</span></label>
+            <label><input type="radio" name="q4" value="Yes – 20+ locations" /><span>Yes — 20+ locations</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q5</span><label>Who is your ideal online customer? Describe them.</label></div>
+          <div class="q-hint">Age, location, lifestyle, what problem you solve for them, how they typically find you.</div>
+          <textarea name="q5" rows="3" placeholder="Our ideal customer is..."></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">2</div>
+        <h2>Current Online Presence</h2>
+      </div>
+      <div class="section-body">
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q6</span><label>What is your current website URL?</label></div>
+          <input type="text" name="q6" placeholder="https://..." />
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q7</span><label>What e-commerce or website platform are you on?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q7" value="Shopify" /><span>Shopify</span></label>
+            <label><input type="radio" name="q7" value="WooCommerce (WordPress)" /><span>WooCommerce (WordPress)</span></label>
+            <label><input type="radio" name="q7" value="BigCommerce" /><span>BigCommerce</span></label>
+            <label><input type="radio" name="q7" value="Custom-built" /><span>Custom-built</span></label>
+            <label><input type="radio" name="q7" value="No website yet" /><span>No website yet</span></label>
+            <label><input type="radio" name="q7" value="Other" /><span>Other</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q8</span><label>How effective is your current website? (1 = broken/embarrassing, 10 = industry-leading)</label></div>
+          <div class="scale-row">
+            <input type="radio" id="q8_1" name="q8" value="1" /><label for="q8_1">1</label>
+            <input type="radio" id="q8_2" name="q8" value="2" /><label for="q8_2">2</label>
+            <input type="radio" id="q8_3" name="q8" value="3" /><label for="q8_3">3</label>
+            <input type="radio" id="q8_4" name="q8" value="4" /><label for="q8_4">4</label>
+            <input type="radio" id="q8_5" name="q8" value="5" /><label for="q8_5">5</label>
+            <input type="radio" id="q8_6" name="q8" value="6" /><label for="q8_6">6</label>
+            <input type="radio" id="q8_7" name="q8" value="7" /><label for="q8_7">7</label>
+            <input type="radio" id="q8_8" name="q8" value="8" /><label for="q8_8">8</label>
+            <input type="radio" id="q8_9" name="q8" value="9" /><label for="q8_9">9</label>
+            <input type="radio" id="q8_10" name="q8" value="10" /><label for="q8_10">10</label>
+          </div>
+          <div class="q-hint">What's the #1 thing holding your website back?</div>
+          <input type="text" name="q8_why" placeholder="The biggest issue is..." />
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q9</span><label>Approximately how many visitors does your website get per month?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q9" value="I don't know" /><span>I don't know / I don't track this</span></label>
+            <label><input type="radio" name="q9" value="Under 500" /><span>Under 500</span></label>
+            <label><input type="radio" name="q9" value="500 – 2,000" /><span>500 – 2,000</span></label>
+            <label><input type="radio" name="q9" value="2,000 – 10,000" /><span>2,000 – 10,000</span></label>
+            <label><input type="radio" name="q9" value="10,000 – 50,000" /><span>10,000 – 50,000</span></label>
+            <label><input type="radio" name="q9" value="50,000+" /><span>50,000+</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q10</span><label>Which online channels generate revenue today? (Check all that apply)</label></div>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="q10" value="Our own website/store" /><span>Our own website / store</span></label>
+            <label><input type="checkbox" name="q10" value="Amazon" /><span>Amazon</span></label>
+            <label><input type="checkbox" name="q10" value="eBay" /><span>eBay</span></label>
+            <label><input type="checkbox" name="q10" value="Instagram / Facebook Shops" /><span>Instagram / Facebook Shops</span></label>
+            <label><input type="checkbox" name="q10" value="TikTok Shop" /><span>TikTok Shop</span></label>
+            <label><input type="checkbox" name="q10" value="Wholesale/B2B portals" /><span>Wholesale / B2B portals</span></label>
+            <label><input type="checkbox" name="q10" value="None yet" /><span>None yet</span></label>
+            <label><input type="checkbox" name="q10" value="Other" /><span>Other</span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">3</div>
+        <h2>Compliance & Product Considerations</h2>
+      </div>
+      <div class="section-body">
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q11</span><label>Do any of your products require age verification or have regulatory restrictions for online sale?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q11" value="Yes – significant restrictions" /><span>Yes — significant restrictions (e.g. tobacco, nicotine, alcohol, CBD)</span></label>
+            <label><input type="radio" name="q11" value="Yes – minor restrictions" /><span>Yes — minor restrictions</span></label>
+            <label><input type="radio" name="q11" value="No" /><span>No restrictions</span></label>
+            <label><input type="radio" name="q11" value="Not sure" /><span>Not sure</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q12</span><label>If yes — how do you currently handle age verification and compliance for online orders?</label></div>
+          <textarea name="q12" rows="2" placeholder="We use [process/tool] to verify age at [checkout/delivery/etc]..."></textarea>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q13</span><label>Are there states, regions, or platforms that currently block your ability to sell online?</label></div>
+          <textarea name="q13" rows="2" placeholder="Yes – we can't sell to [X] because... / No – we can sell everywhere..."></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">4</div>
+        <h2>Growth Goals</h2>
+      </div>
+      <div class="section-body">
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q14</span><label>What does "growing your online business" look like to you in 12 months?</label></div>
+          <div class="q-hint">Be specific — revenue target, % of total business, customer count, geographic expansion, etc.</div>
+          <textarea name="q14" rows="3" placeholder="In 12 months, success means..."></textarea>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q15</span><label>What is your 3-year vision for the online channel?</label></div>
+          <textarea name="q15" rows="3" placeholder="In 3 years, we want the online business to be..."></textarea>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q16</span><label>Where does most of your growth need to come from?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q16" value="New customers we don't have today" /><span>New customers we don't have today</span></label>
+            <label><input type="radio" name="q16" value="Getting existing customers to buy more often" /><span>Getting existing customers to buy more often</span></label>
+            <label><input type="radio" name="q16" value="Increasing average order value" /><span>Increasing average order value</span></label>
+            <label><input type="radio" name="q16" value="Expanding to new markets or channels" /><span>Expanding to new markets or channels</span></label>
+            <label><input type="radio" name="q16" value="All of the above equally" /><span>All of the above equally</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q17</span><label>Are there specific product categories you want to push harder online?</label></div>
+          <textarea name="q17" rows="2" placeholder="Yes – specifically [categories] because..."></textarea>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q18</span><label>Are you open to new online channels, or focused on improving existing ones?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q18" value="Focus on fixing what we have first" /><span>Fix and optimize what we already have first</span></label>
+            <label><input type="radio" name="q18" value="Open to new channels" /><span>Open to launching on new channels (Amazon, wholesale, subscription, etc.)</span></label>
+            <label><input type="radio" name="q18" value="Both simultaneously" /><span>Both simultaneously</span></label>
+            <label><input type="radio" name="q18" value="Not sure yet" /><span>Not sure yet — open to recommendations</span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">5</div>
+        <h2>Marketing & Customer Acquisition</h2>
+      </div>
+      <div class="section-body">
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q19</span><label>Which marketing channels are you currently using? (Check all that apply)</label></div>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="q19" value="SEO (organic search)" /><span>SEO (organic search)</span></label>
+            <label><input type="checkbox" name="q19" value="Google Ads (paid search)" /><span>Google Ads (paid search)</span></label>
+            <label><input type="checkbox" name="q19" value="Facebook / Instagram ads" /><span>Facebook / Instagram ads</span></label>
+            <label><input type="checkbox" name="q19" value="TikTok ads" /><span>TikTok ads</span></label>
+            <label><input type="checkbox" name="q19" value="Email marketing" /><span>Email marketing</span></label>
+            <label><input type="checkbox" name="q19" value="SMS / text marketing" /><span>SMS / text marketing</span></label>
+            <label><input type="checkbox" name="q19" value="Influencer / affiliate" /><span>Influencer / affiliate</span></label>
+            <label><input type="checkbox" name="q19" value="Word of mouth only" /><span>Word of mouth only</span></label>
+            <label><input type="checkbox" name="q19" value="None" /><span>None yet</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q20</span><label>What is your current monthly marketing spend?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q20" value="$0 – we don't pay for marketing" /><span>$0 — we don't pay for marketing currently</span></label>
+            <label><input type="radio" name="q20" value="Under $1,000/mo" /><span>Under $1,000/mo</span></label>
+            <label><input type="radio" name="q20" value="$1,000 – $5,000/mo" /><span>$1,000 – $5,000/mo</span></label>
+            <label><input type="radio" name="q20" value="$5,000 – $15,000/mo" /><span>$5,000 – $15,000/mo</span></label>
+            <label><input type="radio" name="q20" value="$15,000+/mo" /><span>$15,000+/mo</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q21</span><label>Do you have an email or SMS subscriber list?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q21" value="No list at all" /><span>No list at all</span></label>
+            <label><input type="radio" name="q21" value="Yes – under 1,000 subscribers" /><span>Yes — under 1,000 subscribers</span></label>
+            <label><input type="radio" name="q21" value="Yes – 1,000 to 10,000" /><span>Yes — 1,000 to 10,000</span></label>
+            <label><input type="radio" name="q21" value="Yes – 10,000 to 50,000" /><span>Yes — 10,000 to 50,000</span></label>
+            <label><input type="radio" name="q21" value="Yes – 50,000+" /><span>Yes — 50,000+</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q22</span><label>What has been your highest-ROI marketing activity so far? What flopped?</label></div>
+          <textarea name="q22" rows="3" placeholder="Best: ... Worst: ..."></textarea>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q23</span><label>How do customers currently find you online?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q23" value="Mostly organic search (Google)" /><span>Mostly organic search (Google)</span></label>
+            <label><input type="radio" name="q23" value="Mostly paid advertising" /><span>Mostly paid advertising</span></label>
+            <label><input type="radio" name="q23" value="Mostly social media" /><span>Mostly social media</span></label>
+            <label><input type="radio" name="q23" value="Mostly word of mouth / referrals" /><span>Mostly word of mouth / referrals</span></label>
+            <label><input type="radio" name="q23" value="We don't really know" /><span>We don't really know</span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 6 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">6</div>
+        <h2>Technology & Operations</h2>
+      </div>
+      <div class="section-body">
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q24</span><label>What tools do you use for e-commerce, inventory, and customer management?</label></div>
+          <div class="q-hint">E.g. Shopify, QuickBooks, HubSpot, Klaviyo, ShipBob — list whatever you have.</div>
+          <textarea name="q24" rows="2" placeholder="We use [tools] for [purpose]..."></textarea>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q25</span><label>What are your biggest operational pain points for online orders?</label></div>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="q25" value="Shipping speed / fulfillment" /><span>Shipping speed / fulfillment</span></label>
+            <label><input type="checkbox" name="q25" value="Returns and refunds" /><span>Returns and refunds</span></label>
+            <label><input type="checkbox" name="q25" value="Inventory management / stockouts" /><span>Inventory management / stockouts</span></label>
+            <label><input type="checkbox" name="q25" value="Age verification / compliance" /><span>Age verification / compliance</span></label>
+            <label><input type="checkbox" name="q25" value="Website performance / tech issues" /><span>Website performance / tech issues</span></label>
+            <label><input type="checkbox" name="q25" value="Customer service volume" /><span>Customer service volume</span></label>
+            <label><input type="checkbox" name="q25" value="Payment processing / chargebacks" /><span>Payment processing / chargebacks</span></label>
+            <label><input type="checkbox" name="q25" value="Not really any major issues" /><span>Not really any major issues</span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 7 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">7</div>
+        <h2>Team & Investment</h2>
+      </div>
+      <div class="section-body">
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q26</span><label>Who is responsible for your online business today?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q26" value="Owner/founder directly" /><span>Owner / founder directly</span></label>
+            <label><input type="radio" name="q26" value="Dedicated internal team" /><span>Dedicated internal team</span></label>
+            <label><input type="radio" name="q26" value="Shared across multiple roles" /><span>Shared across multiple roles — nobody fully owns it</span></label>
+            <label><input type="radio" name="q26" value="External agency or freelancers" /><span>External agency or freelancers</span></label>
+            <label><input type="radio" name="q26" value="No one right now" /><span>No one right now</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q27</span><label>What is your budget for online business investment over the next 12 months?</label></div>
+          <div class="radio-group">
+            <label><input type="radio" name="q27" value="Under $10,000" /><span>Under $10,000</span></label>
+            <label><input type="radio" name="q27" value="$10,000 – $25,000" /><span>$10,000 – $25,000</span></label>
+            <label><input type="radio" name="q27" value="$25,000 – $75,000" /><span>$25,000 – $75,000</span></label>
+            <label><input type="radio" name="q27" value="$75,000 – $150,000" /><span>$75,000 – $150,000</span></label>
+            <label><input type="radio" name="q27" value="$150,000+" /><span>$150,000+</span></label>
+            <label><input type="radio" name="q27" value="Flexible depending on ROI case" /><span>Flexible — depends on the ROI case</span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 8 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">8</div>
+        <h2>Priorities & Partnership</h2>
+      </div>
+      <div class="section-body">
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q28</span><label>What is the single most important thing you want to solve in the next 90 days?</label></div>
+          <textarea name="q28" rows="2" placeholder="The #1 thing is..."></textarea>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q29</span><label>What have you already tried to grow online that didn't work? What did you learn?</label></div>
+          <textarea name="q29" rows="3" placeholder="We tried [X], it didn't work because [Y], and we learned [Z]..."></textarea>
+        </div>
+
+        <div class="q">
+          <div class="q-label"><span class="q-num">Q30</span><label>What would make this engagement clearly successful for you? How would you measure it?</label></div>
+          <textarea name="q30" rows="3" placeholder="Success for us looks like... and we'd measure it by..."></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="section">
+      <div class="section-header">
+        <div class="num">✉</div>
+        <h2>Your Contact Info</h2>
+      </div>
+      <div class="section-body">
+        <div class="q">
+          <div class="q-label"><span class="q-num">—</span><label>Name</label></div>
+          <input type="text" name="contact_name" placeholder="Your full name" />
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">—</span><label>Email</label></div>
+          <input type="email" name="contact_email" placeholder="your@email.com" />
+        </div>
+        <div class="q">
+          <div class="q-label"><span class="q-num">—</span><label>Role / Title</label></div>
+          <input type="text" name="contact_role" placeholder="e.g. CEO, Marketing Director..." />
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-zone">
+      <p>When you click below, your answers will be formatted and your email client will open — just hit Send. Takes 5 seconds.</p>
+      <button type="button" class="btn-primary" onclick="submitForm()">Generate & Send Responses →</button>
+      <div id="copy-feedback">
+        <strong>✅ Email client opened!</strong>
+        If it didn't open, your answers have been copied to your clipboard. Paste them into an email to <strong>kyle.schildkraut@gmail.com</strong> with subject "Topicz – Online Growth Discovery".
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+<p class="privacy">Your responses are confidential and used only for the purposes of this engagement.</p>
+<br/>
+
+<script>
+function submitForm() {
+  const form = document.getElementById('discovery-form');
+  const questions = {
+    q1: "1. What does Topicz sell, and to whom?",
+    q2: "2. Approximate annual revenue",
+    q3: "3. % of revenue from online channels",
+    q4: "4. Brick-and-mortar locations",
+    q5: "5. Ideal online customer",
+    q6: "6. Website URL",
+    q7: "7. E-commerce platform",
+    q8: "8. Website effectiveness rating",
+    q8_why: "   → Biggest website issue",
+    q9: "9. Monthly website visitors",
+    q10: "10. Online channels generating revenue",
+    q11: "11. Products with regulatory restrictions",
+    q12: "12. Age verification / compliance process",
+    q13: "13. Regions or platforms that block online sales",
+    q14: "14. 12-month online growth vision",
+    q15: "15. 3-year vision for online channel",
+    q16: "16. Primary growth source",
+    q17: "17. Product categories to push online",
+    q18: "18. New channels vs. optimize existing",
+    q19: "19. Marketing channels in use",
+    q20: "20. Monthly marketing spend",
+    q21: "21. Email / SMS subscriber list size",
+    q22: "22. Best and worst marketing activities",
+    q23: "23. How customers find you online",
+    q24: "24. Tools for e-commerce, inventory, CRM",
+    q25: "25. Biggest operational pain points",
+    q26: "26. Who owns the online business",
+    q27: "27. 12-month investment budget",
+    q28: "28. Top priority in next 90 days",
+    q29: "29. What has been tried and didn't work",
+    q30: "30. How success would be measured",
+    contact_name: "Name",
+    contact_email: "Email",
+    contact_role: "Role / Title"
+  };
+
+  let body = "TOPICZ — ONLINE GROWTH DISCOVERY QUESTIONNAIRE\n";
+  body += "Submitted: " + new Date().toLocaleString() + "\n";
+  body += "=".repeat(55) + "\n\n";
+
+  for (const [key, label] of Object.entries(questions)) {
+    let value = "";
+    const elements = form.querySelectorAll(`[name="${key}"]`);
+    if (elements.length === 0) continue;
+
+    const type = elements[0].type;
+    if (type === "radio") {
+      const checked = form.querySelector(`[name="${key}"]:checked`);
+      value = checked ? checked.value : "(not answered)";
+    } else if (type === "checkbox") {
+      const checked = [...elements].filter(e => e.checked).map(e => e.value);
+      value = checked.length > 0 ? checked.join(", ") : "(not answered)";
+    } else {
+      value = elements[0].value.trim() || "(not answered)";
+    }
+
+    body += label + "\n";
+    body += "→ " + value + "\n\n";
+  }
+
+  const subject = "Topicz – Online Growth Discovery";
+  const mailto = `mailto:kyle.schildkraut@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // Copy to clipboard as backup
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(body);
+  }
+
+  window.location.href = mailto;
+  document.getElementById('copy-feedback').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
