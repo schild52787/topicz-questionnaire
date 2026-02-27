@@ -551,9 +551,15 @@
         </div>
       </div>
 
-      <div id="copy-feedback">
-        <strong>✅ Your email client opened with all responses included.</strong>
-        If it didn't open automatically, your answers have been copied to your clipboard. Paste them into an email and send to your contact directly.
+      <div id="submit-success" style="display:none;padding:12px 0;">
+        <div style="font-size:52px;margin-bottom:14px;">✅</div>
+        <h3 style="font-size:22px;margin-bottom:10px;">Responses received — thank you!</h3>
+        <p style="margin-bottom:0;">We'll review your answers and have a preliminary analysis back to you within 48 hours.</p>
+      </div>
+
+      <div id="submit-error" style="display:none;margin-top:16px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:8px;padding:12px 16px;font-size:13px;">
+        <strong>Submission failed.</strong> Please copy your responses and email them directly: <a href="mailto:kyle.schildkraut@gmail.com" style="color:#fca5a5;">kyle.schildkraut@gmail.com</a>
+        <button onclick="fallbackCopy()" style="margin-left:10px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;">Copy Responses</button>
       </div>
     </div>
 
@@ -563,6 +569,11 @@
 <p class="privacy">Confidential — prepared specifically for Topicz. Your responses will not be shared outside of this engagement.</p><br/>
 
 <script>
+// ── FORMSPREE ENDPOINT ──────────────────────────────────────────────────────
+// To activate: go to formspree.io → New Form → copy the endpoint URL and paste below
+const FORMSPREE_ENDPOINT = 'CONFIGURE_ME';
+// ────────────────────────────────────────────────────────────────────────────
+
 const LABELS = {
   q1:"1. Business model – B2B vs DTC structure",
   q2:"2. Product categories sold", q2_revenue:"   → Top revenue categories",
@@ -611,17 +622,67 @@ function getVal(name) {
   return els[0].value.trim() || "(not answered)";
 }
 
-function submitForm() {
+function buildResponseText() {
   let body = "TOPICZ — ONLINE GROWTH ROADMAP DISCOVERY · PHASE 1\n";
   body += "Submitted: " + new Date().toLocaleString() + "\n";
   body += "=".repeat(60) + "\n\n";
   for (const [key, label] of Object.entries(LABELS)) {
     body += label + "\n→ " + getVal(key) + "\n\n";
   }
+  return body;
+}
+
+function fallbackCopy() {
+  const body = buildResponseText();
+  if (navigator.clipboard) navigator.clipboard.writeText(body).catch(()=>{});
+  alert("Responses copied to clipboard.");
+}
+
+async function submitForm() {
+  const btn = document.querySelector('.btn-primary');
+  const originalText = btn.textContent;
+  btn.textContent = 'Submitting…';
+  btn.disabled = true;
+
+  // Build payload
+  const payload = {
+    _subject: 'Topicz – Online Growth Discovery (Phase 1)',
+    _submitted_at: new Date().toLocaleString()
+  };
+  for (const [key, label] of Object.entries(LABELS)) {
+    payload[label] = getVal(key);
+  }
+
+  // Try Formspree if configured
+  if (FORMSPREE_ENDPOINT !== 'CONFIGURE_ME') {
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        document.getElementById('submit-success').style.display = 'block';
+        btn.style.display = 'none';
+        document.querySelector('.submit-zone p') && (document.querySelector('.submit-zone p').style.display = 'none');
+        document.querySelector('.next-steps').style.marginTop = '24px';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        return;
+      }
+    } catch (e) { /* fall through to fallback */ }
+    document.getElementById('submit-error').style.display = 'block';
+    btn.textContent = originalText;
+    btn.disabled = false;
+    return;
+  }
+
+  // Fallback: not yet configured — use mailto + clipboard
+  const body = buildResponseText();
   if (navigator.clipboard) navigator.clipboard.writeText(body).catch(()=>{});
   const subject = "Topicz – Online Growth Discovery (Phase 1)";
   window.location.href = `mailto:kyle.schildkraut@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  document.getElementById('copy-feedback').style.display = 'block';
+  document.getElementById('submit-success').style.display = 'block';
+  btn.style.display = 'none';
   window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 }
 </script>
