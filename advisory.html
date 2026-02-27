@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Topicz — Strategic Advisory Intake</title>
+<meta name="description" content="Strategic advisory intake — financial, operational, and competitive assessment for Topicz." />
+<meta property="og:title" content="Topicz — Strategic Advisory Intake" />
+<meta property="og:description" content="Confidential intake questionnaire for strategic and financial advisory. 26 questions — financial, competitive, operational, and strategic intent." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://schild52787.github.io/topicz-questionnaire/advisory.html" />
+<meta property="og:image" content="https://schild52787.github.io/topicz-questionnaire/preview.svg" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --brand: #0d1117; --accent: #e94560; --accent2: #161b22;
+  --light: #f6f8fa; --border: #30363d; --text: #e6edf3;
+  --muted: #8b949e; --gold: #d29922; --green: #3fb950; --red: #f85149;
+  --radius: 8px;
+}
+html, body { background: var(--brand); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.5; }
+a { color: var(--accent); }
+
+/* ── LAYOUT ── */
+.page { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ── HEADER ── */
+header { border-bottom: 1px solid var(--border); padding: 32px 0 28px; margin-bottom: 40px; }
+.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+.header-logo { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); }
+.header-badge { background: rgba(233,69,96,0.15); border: 1px solid rgba(233,69,96,0.35); color: var(--accent); border-radius: 4px; padding: 4px 12px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+header h1 { font-size: clamp(22px, 4vw, 36px); font-weight: 800; line-height: 1.2; margin-bottom: 10px; }
+header p { font-size: 15px; color: var(--muted); max-width: 640px; line-height: 1.7; }
+.header-meta { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+.header-meta span { font-size: 12px; color: var(--muted); }
+.header-meta span strong { color: var(--text); }
+
+/* ── CONTEXT CARD ── */
+.context { background: var(--accent2); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 36px; }
+.context p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.context strong { color: var(--text); }
+
+/* ── SECTION HEADER ── */
+.section-header { display: flex; align-items: center; gap: 12px; padding: 12px 0; margin: 32px 0 4px; border-bottom: 1px solid var(--border); }
+.section-header .num { background: var(--accent); min-width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: white; }
+.section-header h2 { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+
+/* ── QUESTION ── */
+.q { padding: 20px 0; border-bottom: 1px solid rgba(48,54,61,0.5); }
+.q:last-child { border-bottom: none; }
+.q-label { margin-bottom: 10px; }
+.q-num { display: inline-block; font-size: 11px; font-weight: 700; color: var(--accent); margin-right: 8px; letter-spacing: 0.5px; }
+.q-text { font-size: 15px; font-weight: 600; color: var(--text); }
+.q-why { background: rgba(210,153,34,0.08); border-left: 2px solid rgba(210,153,34,0.4); padding: 8px 12px; margin: 8px 0 12px; font-size: 12px; color: var(--muted); line-height: 1.6; border-radius: 0 4px 4px 0; }
+.q-why strong { color: #d29922; font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase; display: block; margin-bottom: 2px; }
+
+/* ── INPUTS ── */
+textarea, input[type="text"], input[type="number"], select {
+  width: 100%; padding: 10px 14px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--accent2);
+  color: var(--text); font-size: 14px; font-family: inherit;
+  transition: border-color 0.15s; resize: vertical;
+}
+textarea:focus, input:focus, select:focus { outline: none; border-color: var(--accent); }
+textarea::placeholder, input::placeholder { color: var(--muted); }
+.radio-group { display: flex; flex-direction: column; gap: 6px; }
+.radio-group label, .check-group label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; padding: 9px 12px; border-radius: var(--radius); border: 1px solid transparent; transition: background 0.1s, border-color 0.1s; }
+.radio-group label:hover, .check-group label:hover { background: rgba(255,255,255,0.04); border-color: var(--border); }
+.radio-group label input, .check-group label input { margin-top: 3px; flex-shrink: 0; accent-color: var(--accent); }
+.radio-group label span, .check-group label span { font-size: 14px; color: var(--text); }
+.check-group { display: flex; flex-direction: column; gap: 6px; }
+.input-row { display: flex; gap: 12px; }
+.input-row input, .input-row select { flex: 1; }
+.range-row { display: flex; gap: 12px; align-items: center; font-size: 13px; color: var(--muted); }
+.range-row input { max-width: 140px; }
+
+/* ── SUBMIT ── */
+.submit-zone { background: linear-gradient(135deg, #161b22, #0d1117); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: var(--radius); padding: 36px 32px; text-align: center; margin-top: 48px; }
+.submit-zone h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+.submit-zone p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+.btn-primary { background: var(--accent); color: white; border: none; border-radius: var(--radius); padding: 14px 36px; font-size: 15px; font-weight: 700; cursor: pointer; transition: opacity 0.15s, transform 0.1s; }
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+#submit-success { display: none; }
+#submit-error { display: none; background: rgba(248,81,73,0.1); border: 1px solid rgba(248,81,73,0.3); border-radius: var(--radius); padding: 12px 16px; margin-top: 14px; font-size: 13px; color: #f85149; }
+
+/* ── PRIORITY BADGE ── */
+.priority-high { display: inline-block; background: rgba(248,81,73,0.15); color: #f85149; border: 1px solid rgba(248,81,73,0.3); border-radius: 4px; padding: 2px 8px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-left: 8px; vertical-align: middle; }
+.priority-med { display: inline-block; background: rgba(210,153,34,0.15); color: #d29922; border: 1px solid rgba(210,153,34,0.3); border-radius: 4px; padding: 2px 8px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-left: 8px; vertical-align: middle; }
+
+/* ── FOOTER ── */
+.privacy { text-align: center; font-size: 11px; color: var(--muted); margin-top: 32px; letter-spacing: 0.5px; }
+
+@media (max-width: 600px) { .page { padding: 0 16px 60px; } .submit-zone { padding: 24px 16px; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="header-top">
+    <div class="header-logo">Topicz · Confidential</div>
+    <div class="header-badge">Strategic Advisory Intake</div>
+  </div>
+  <h1>Strategic &amp; Financial<br/>Advisory Intake</h1>
+  <p>This intake is designed to give us a complete picture of Topicz's financial position, competitive standing, and strategic direction — the same information a financial advisor, investment banker, or acquirer would need to assess the business and recommend a growth path.</p>
+  <div class="header-meta">
+    <span><strong>26</strong> questions</span>
+    <span><strong>~20 minutes</strong></span>
+    <span><strong>Strictly confidential</strong></span>
+  </div>
+</header>
+
+<div class="context">
+  <p><strong>Why this is different from Phase 1:</strong> The previous questionnaire mapped your operational setup. This one focuses on the financial and strategic picture — revenue quality, margin structure, customer concentration, competitive moat, and where you want to take the business. Your answers determine which growth paths are genuinely available, what the business is worth today, and what it could be worth with the right moves.</p>
+</div>
+
+<form id="advisory-form">
+
+  <!-- ══ SECTION 1: FINANCIALS ══ -->
+  <div class="section-header"><div class="num">1</div><h2>Financial Overview</h2></div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A1</span><span class="q-text">What is Topicz's approximate annual revenue?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>Revenue scale determines which growth investments are proportionate, which platforms make sense, and what the business looks like to a potential partner or acquirer. It also calibrates every ROI projection we build.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a1" value="Under $1M" /><span>Under $1M</span></label>
+        <label><input type="radio" name="a1" value="$1M – $5M" /><span>$1M – $5M</span></label>
+        <label><input type="radio" name="a1" value="$5M – $20M" /><span>$5M – $20M</span></label>
+        <label><input type="radio" name="a1" value="$20M – $50M" /><span>$20M – $50M</span></label>
+        <label><input type="radio" name="a1" value="$50M – $100M" /><span>$50M – $100M</span></label>
+        <label><input type="radio" name="a1" value="Over $100M" /><span>Over $100M</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A2</span><span class="q-text">What is Topicz's approximate gross margin — revenue minus cost of goods?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>Gross margin tells us how much is available for operations, growth investment, and profit after the product is sourced. Tobacco distributors typically operate at thin margins (3–8%) where rebates and scan data programs are the primary lever for improving profitability. Knowing your margin helps us assess how much the scan data and rebate opportunity is worth relative to total profitability.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a2" value="Under 5%" /><span>Under 5% — typical for high-volume cigarette distribution</span></label>
+        <label><input type="radio" name="a2" value="5% – 10%" /><span>5% – 10%</span></label>
+        <label><input type="radio" name="a2" value="10% – 20%" /><span>10% – 20%</span></label>
+        <label><input type="radio" name="a2" value="20% – 35%" /><span>20% – 35%</span></label>
+        <label><input type="radio" name="a2" value="Over 35%" /><span>Over 35%</span></label>
+        <label><input type="radio" name="a2" value="Prefer not to disclose" /><span>Prefer not to disclose</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A3</span><span class="q-text">How has Topicz's revenue trended over the past 3 years?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>Revenue trajectory is one of the most important inputs in any business assessment. A declining business needs a different strategy than a growing one — and the cause of the decline (volume, price, account losses, category headwinds) determines the right response. Cigarette volumes have declined industry-wide for decades; any business growing despite that headwind has a meaningful competitive advantage worth understanding.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a3" value="Growing significantly (10%+ per year)" /><span>Growing significantly — 10%+ per year</span></label>
+        <label><input type="radio" name="a3" value="Growing modestly (1–10% per year)" /><span>Growing modestly — 1–10% per year</span></label>
+        <label><input type="radio" name="a3" value="Flat" /><span>Flat — roughly stable</span></label>
+        <label><input type="radio" name="a3" value="Declining modestly (1–10% per year)" /><span>Declining modestly — 1–10% per year</span></label>
+        <label><input type="radio" name="a3" value="Declining significantly (10%+ per year)" /><span>Declining significantly — 10%+ per year</span></label>
+      </div>
+      <textarea name="a3_context" rows="2" placeholder="Optional: What's driving the trend? (New accounts, category shift, pricing, etc.)" style="margin-top:10px;"></textarea>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A4</span><span class="q-text">Does Topicz carry debt, a credit line, or outside investment?</span></div>
+      <div class="q-why"><strong>Context</strong>Capital structure affects how much of the $75K–$200K investment budget is available without outside financing, and whether a credit facility exists to accelerate growth investments if the ROI case is compelling.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a4" value="No debt – self-funded, no outside capital" /><span>No debt — self-funded, bootstrapped</span></label>
+        <label><input type="radio" name="a4" value="Operating credit line only" /><span>Operating credit line only (e.g. inventory financing)</span></label>
+        <label><input type="radio" name="a4" value="Significant debt / term loan" /><span>Significant debt or term loan outstanding</span></label>
+        <label><input type="radio" name="a4" value="Outside investors / partners" /><span>Outside investors or equity partners</span></label>
+        <label><input type="radio" name="a4" value="SBA or government-backed loan" /><span>SBA or government-backed loan</span></label>
+      </div>
+    </div>
+
+  <!-- ══ SECTION 2: REVENUE QUALITY ══ -->
+  <div class="section-header"><div class="num">2</div><h2>Revenue Quality &amp; Customer Concentration</h2></div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A5</span><span class="q-text">What percentage of Topicz's revenue comes from its top 5 retail accounts?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>Customer concentration is the single largest risk factor in any distribution business. If 50%+ of revenue comes from 5 accounts, losing one is an existential event. It also affects every growth conversation: a business with diversified revenue across 500 accounts is more valuable, more defensible, and better positioned for a B2B portal rollout than one with 10 major accounts who all have direct manufacturer relationships.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a5" value="Top 5 = under 20% of revenue" /><span>Under 20% — highly diversified</span></label>
+        <label><input type="radio" name="a5" value="Top 5 = 20–40% of revenue" /><span>20–40% of revenue</span></label>
+        <label><input type="radio" name="a5" value="Top 5 = 40–60% of revenue" /><span>40–60% of revenue</span></label>
+        <label><input type="radio" name="a5" value="Top 5 = 60%+ of revenue" /><span>60%+ — highly concentrated</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A6</span><span class="q-text">How many active retail accounts does Topicz serve, and how many are ordering at least monthly?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>Total accounts and active accounts are different numbers — and the gap between them is often where the first growth opportunity lies. Reactivating dormant accounts through a self-service portal is frequently faster ROI than acquiring new ones.</div>
+      <div class="input-row">
+        <input type="text" name="a6_total" placeholder="Total accounts on file: approx. ___" />
+        <input type="text" name="a6_active" placeholder="Ordering at least monthly: approx. ___" />
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A7</span><span class="q-text">What is the average monthly order value per active account?</span></div>
+      <div class="q-why"><strong>Context</strong>Average order value, combined with order frequency and account count, gives us the B2B portal revenue model. It also determines minimum order thresholds, which affect whether a portal needs payment-at-checkout or net terms.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a7" value="Under $500/month" /><span>Under $500/month</span></label>
+        <label><input type="radio" name="a7" value="$500 – $2,000/month" /><span>$500 – $2,000/month</span></label>
+        <label><input type="radio" name="a7" value="$2,000 – $10,000/month" /><span>$2,000 – $10,000/month</span></label>
+        <label><input type="radio" name="a7" value="$10,000 – $50,000/month" /><span>$10,000 – $50,000/month</span></label>
+        <label><input type="radio" name="a7" value="Over $50,000/month" /><span>Over $50,000/month per account</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A8</span><span class="q-text">Does Topicz extend credit terms to retail accounts? If so, what are typical terms?</span></div>
+      <div class="q-why"><strong>Context</strong>Net 30/60 terms are standard in tobacco distribution but create a working capital drag that online portals can either worsen (if checkout extends terms automatically) or improve (if portal moves accounts to prepay or shorter terms). This affects how we design the portal's payment flow and whether payment processing needs to integrate with an AR/invoicing system.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a8" value="COD only – no credit extended" /><span>COD only — no credit extended</span></label>
+        <label><input type="radio" name="a8" value="Net 7–15 days" /><span>Net 7–15 days</span></label>
+        <label><input type="radio" name="a8" value="Net 30 days" /><span>Net 30 days</span></label>
+        <label><input type="radio" name="a8" value="Net 30–60 days, varies by account" /><span>Net 30–60 days — varies by account</span></label>
+        <label><input type="radio" name="a8" value="Mixed – some COD, some net terms" /><span>Mixed — some accounts COD, some on net terms</span></label>
+      </div>
+    </div>
+
+  <!-- ══ SECTION 3: PRODUCTS & SUPPLIERS ══ -->
+  <div class="section-header"><div class="num">3</div><h2>Products, Suppliers &amp; Margin Mix</h2></div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A9</span><span class="q-text">Which tobacco manufacturers does Topicz carry, and which accounts for the largest share of purchases?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>Manufacturer relationships determine rebate and scan data program eligibility. Altria alone has multiple distinct programs (Retail Leaders, scan data, promotional allowances, buy-downs) that can represent meaningful incremental margin. RJ Reynolds and ITG have comparable structures. Knowing which manufacturers — and at what volume — gives us a concrete dollar estimate for uncaptured rebate opportunity.</div>
+      <div class="check-group">
+        <label><input type="checkbox" name="a9" value="Altria / Philip Morris USA" /><span>Altria / Philip Morris USA (Marlboro, Virginia Slims, etc.) — primary supplier</span></label>
+        <label><input type="checkbox" name="a9" value="RJ Reynolds / BAT" /><span>RJ Reynolds / BAT (Newport, Camel, Pall Mall, Natural American Spirit)</span></label>
+        <label><input type="checkbox" name="a9" value="ITG Brands / Commonwealth" /><span>ITG Brands / Commonwealth Brands (Winston, Kool, Maverick, Salem)</span></label>
+        <label><input type="checkbox" name="a9" value="Standard Register / Liggett" /><span>Standard Register / Liggett (Eagle 20's, Pyramid)</span></label>
+        <label><input type="checkbox" name="a9" value="Swedish Match / PMI (Zyn, snus)" /><span>Swedish Match / PMI (Zyn pouches, General snus)</span></label>
+        <label><input type="checkbox" name="a9" value="Other tobacco manufacturers" /><span>Other tobacco manufacturers</span></label>
+      </div>
+      <textarea name="a9_primary" rows="1" placeholder="Largest supplier by purchase volume: ___" style="margin-top:10px;"></textarea>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A10</span><span class="q-text">What is the approximate revenue split between cigarettes and convenience / non-tobacco products?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>Cigarette volumes decline ~3–5% annually industry-wide (CDC/SAMHSA data). A distributor that is 90%+ cigarettes faces a structural headwind; one that has meaningfully grown its convenience and non-tobacco mix has built a hedge. This split also determines online strategy: convenience and non-tobacco products have far fewer shipping, age verification, and regulatory constraints, making them the most viable DTC e-commerce category in the near term.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a10" value="90%+ cigarettes" /><span>90%+ cigarettes</span></label>
+        <label><input type="radio" name="a10" value="70–90% cigarettes" /><span>70–90% cigarettes, 10–30% convenience</span></label>
+        <label><input type="radio" name="a10" value="50–70% cigarettes" /><span>50–70% cigarettes, 30–50% convenience</span></label>
+        <label><input type="radio" name="a10" value="Under 50% cigarettes" /><span>Under 50% cigarettes — convenience is the majority or equal</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A11</span><span class="q-text">Does Topicz have exclusive distribution rights in any territory, or does it compete head-to-head with other distributors for the same accounts?</span></div>
+      <div class="q-why"><strong>Context</strong>Exclusivity is a significant moat and a key value driver. If Topicz has exclusive territory agreements with any manufacturers, that protection is worth quantifying — and worth protecting as the business goes digital. If distribution is competitive, the portal becomes even more important as a differentiation tool: the first distributor in a market to offer 24/7 self-service tends to win account loyalty.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a11" value="Exclusive territory for one or more manufacturers" /><span>Exclusive territory for one or more manufacturers</span></label>
+        <label><input type="radio" name="a11" value="Preferred but not exclusive" /><span>Preferred distributor in our region but not exclusive</span></label>
+        <label><input type="radio" name="a11" value="Fully competitive – multiple distributors serve the same accounts" /><span>Fully competitive — multiple distributors serve the same accounts</span></label>
+        <label><input type="radio" name="a11" value="Not sure" /><span>Not sure of formal exclusivity status</span></label>
+      </div>
+    </div>
+
+  <!-- ══ SECTION 4: COMPETITIVE POSITION ══ -->
+  <div class="section-header"><div class="num">4</div><h2>Competitive Position</h2></div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A12</span><span class="q-text">Who are Topicz's 3–5 primary competitors in its distribution territory?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>Named competitors allow us to assess online presence, service model, and likely response to Topicz launching a portal. If a direct competitor already has a functioning B2B portal, the urgency for Topicz to act increases materially — first-mover advantage in digital ordering tends to be sticky once accounts are on a platform.</div>
+      <textarea name="a12" rows="3" placeholder="1. [Competitor name] — what do they do better or worse than Topicz?&#10;2. &#10;3. "></textarea>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A13</span><span class="q-text">Why do retail accounts choose Topicz over a competitor? What's the primary reason they stay?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>This is the most important competitive question. The honest answer — whether it's pricing, relationships, delivery speed, product breadth, or service reliability — tells us what to protect and what to amplify. It also tells us whether the relationship is sticky enough to survive the migration to a self-service model, or whether accounts need a reason to stay that the portal itself has to provide.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a13" value="Price – we're the lowest cost option" /><span>Price — we're the lowest cost option</span></label>
+        <label><input type="radio" name="a13" value="Relationships – owner/rep relationships are the primary bond" /><span>Relationships — owner and rep relationships are the primary loyalty driver</span></label>
+        <label><input type="radio" name="a13" value="Delivery speed / reliability" /><span>Delivery speed and reliability</span></label>
+        <label><input type="radio" name="a13" value="Breadth of product selection" /><span>Breadth of product selection</span></label>
+        <label><input type="radio" name="a13" value="Service and problem resolution" /><span>Service quality and problem resolution when things go wrong</span></label>
+        <label><input type="radio" name="a13" value="Geography / we're the only option in our area" /><span>Geography — we're the primary or only option in our area</span></label>
+        <label><input type="radio" name="a13" value="Multiple factors" /><span>Multiple factors equally</span></label>
+      </div>
+      <textarea name="a13_context" rows="2" placeholder="Anything to add on why accounts stay — or why they've left in the past?" style="margin-top:10px;"></textarea>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A14</span><span class="q-text">Has Topicz lost any significant accounts in the past 12 months? If so, why?</span></div>
+      <div class="q-why"><strong>Context</strong>Account losses are the most telling signal about competitive threats or service gaps. A business that hasn't lost an account in 3 years has a different risk profile than one that has lost 10. The reason for losses — price, service, a competitor's new offering, account closure — shapes the defensive elements of the strategy.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a14" value="No significant losses" /><span>No significant account losses</span></label>
+        <label><input type="radio" name="a14" value="1–3 accounts lost – not material" /><span>1–3 accounts lost — not material to revenue</span></label>
+        <label><input type="radio" name="a14" value="Several accounts lost – noticeable impact" /><span>Several accounts lost — noticeable impact on revenue</span></label>
+        <label><input type="radio" name="a14" value="Significant churn – ongoing issue" /><span>Significant churn — an ongoing concern</span></label>
+      </div>
+      <textarea name="a14_reason" rows="2" placeholder="If losses occurred — what was the primary reason?" style="margin-top:10px;"></textarea>
+    </div>
+
+  <!-- ══ SECTION 5: OPERATIONS & MANAGEMENT ══ -->
+  <div class="section-header"><div class="num">5</div><h2>Operations &amp; Management</h2></div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A15</span><span class="q-text">How many full-time employees does Topicz have, and what are the key roles?</span></div>
+      <div class="q-why"><strong>Context</strong>Headcount tells us capacity for execution. A 5-person operation building a B2B portal needs a different implementation timeline than a 50-person operation. It also tells us whether there are sales reps whose roles will be affected by the portal — managing that transition is as important as the technology build.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a15" value="1–5 employees (owner-operated)" /><span>1–5 employees — owner-operated</span></label>
+        <label><input type="radio" name="a15" value="6–15 employees" /><span>6–15 employees</span></label>
+        <label><input type="radio" name="a15" value="16–50 employees" /><span>16–50 employees</span></label>
+        <label><input type="radio" name="a15" value="50+ employees" /><span>50+ employees</span></label>
+      </div>
+      <textarea name="a15_roles" rows="2" placeholder="Key roles (e.g. 2 drivers, 1 inside sales, 1 admin, owner manages accounts, etc.):" style="margin-top:10px;"></textarea>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A16</span><span class="q-text">Which states does Topicz hold active tobacco distribution licenses in?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>License footprint is the immediate online addressable market. Every unlicensed state is a closed door. Expanding licenses in high-population states (TX, FL, CA, NY, PA, IL) before portal launch dramatically increases the available market with minimal incremental cost — typically $500–$5,000 per state, depending on the state's fee structure.</div>
+      <textarea name="a16" rows="2" placeholder="Currently licensed to distribute in: [list states, e.g. MN, WI, IA, ND, SD...]"></textarea>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A17</span><span class="q-text">What ERP or distribution management system does Topicz use?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>The ERP system is the integration anchor for everything — the portal, scan data submission, rebate reconciliation, and inventory sync. Tobacco-native systems (DAC ERP, ManageMore) have pre-built integrations that reduce build time by months. A custom or general ERP (Sage, QuickBooks, homegrown) requires custom middleware. The answer changes the portal build scope, timeline, and cost estimate significantly.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a17" value="DAC ERP (CDR Software)" /><span>DAC ERP (CDR Software)</span></label>
+        <label><input type="radio" name="a17" value="ManageMore" /><span>ManageMore</span></label>
+        <label><input type="radio" name="a17" value="Sage" /><span>Sage</span></label>
+        <label><input type="radio" name="a17" value="NetSuite" /><span>NetSuite</span></label>
+        <label><input type="radio" name="a17" value="QuickBooks + separate distribution system" /><span>QuickBooks + separate distribution/inventory system</span></label>
+        <label><input type="radio" name="a17" value="Custom-built / proprietary" /><span>Custom-built or proprietary system</span></label>
+        <label><input type="radio" name="a17" value="Other" /><span>Other</span></label>
+      </div>
+      <input type="text" name="a17_name" placeholder="System name (if Other): ___" style="margin-top:10px;" />
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A18</span><span class="q-text">Does Topicz have account-level pricing — different prices for the same product for different retailers?</span></div>
+      <div class="q-why"><strong>Context</strong>Account-level pricing is the most common technical complication in B2B portal builds. If every account pays the same price, the portal is straightforward. If you have tiered or negotiated pricing per account, the portal must display each account's correct prices after login — which requires a real-time ERP pricing sync. Getting this wrong (accounts seeing incorrect prices at checkout) destroys portal trust on day one.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a18" value="Uniform pricing – all accounts pay the same" /><span>Uniform pricing — all accounts pay the same</span></label>
+        <label><input type="radio" name="a18" value="Tiered pricing by volume or account size" /><span>Tiered pricing by volume or account size</span></label>
+        <label><input type="radio" name="a18" value="Individually negotiated pricing per account" /><span>Individually negotiated pricing for each account</span></label>
+        <label><input type="radio" name="a18" value="Standard pricing with promotional exceptions" /><span>Standard pricing with occasional promotional exceptions</span></label>
+      </div>
+    </div>
+
+  <!-- ══ SECTION 6: STRATEGIC INTENT ══ -->
+  <div class="section-header"><div class="num">6</div><h2>Strategic Intent &amp; Exit Horizon</h2></div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A19</span><span class="q-text">What is the owner's 5-year vision for Topicz?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>The 5-year vision is the frame for every recommendation. Building an online channel to maximize a sale in 3 years looks different from building it to run the business better for the next decade. Both are valid — but they lead to different architecture decisions, investment sequencing, and what metrics we optimize for. We need to know which one this is.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a19" value="Grow and hold – pass to family or key employees" /><span>Grow and hold — this is a long-term family or generational business</span></label>
+        <label><input type="radio" name="a19" value="Grow to sell in 3–5 years" /><span>Grow the business to sell or recapitalize within 3–5 years</span></label>
+        <label><input type="radio" name="a19" value="Sell or transition within 12–24 months" /><span>Considering a sale or leadership transition in the near term (12–24 months)</span></label>
+        <label><input type="radio" name="a19" value="Raise outside capital to accelerate growth" /><span>Raise outside capital to accelerate growth</span></label>
+        <label><input type="radio" name="a19" value="Acquire or merge with another distributor" /><span>Acquire or merge with another distributor in the region</span></label>
+        <label><input type="radio" name="a19" value="Still figuring it out" /><span>Still working through what the right path looks like</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A20</span><span class="q-text">Has Topicz received any acquisition interest or approaches from other distributors, larger companies, or private equity in the past 3 years?</span></div>
+      <div class="q-why"><strong>Context</strong>Acquisition interest is a data point on how the market values Topicz today — and what the floor and ceiling on valuation might be. It also tells us whether the strategic conversation should include "what would make this business more attractive to the right buyer" as an explicit objective of the growth work.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a20" value="No interest received" /><span>No — haven't been approached</span></label>
+        <label><input type="radio" name="a20" value="Informal interest but no formal offer" /><span>Informal interest from one or more parties — no formal offer</span></label>
+        <label><input type="radio" name="a20" value="Formal offer received – declined" /><span>Formal offer received — declined or not pursued</span></label>
+        <label><input type="radio" name="a20" value="Currently in or recently completed a process" /><span>Currently in or recently completed an M&amp;A process</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A21</span><span class="q-text">If Topicz were to be valued or sold today, what do you believe the business is worth — and how did you arrive at that?</span></div>
+      <div class="q-why"><strong>Context</strong>Owner perception of value is often the starting point for a productive valuation conversation — and the gap between perceived value and market value is where advisory work delivers its most direct impact. Tobacco distribution businesses typically trade at 3–5x EBITDA, modified by revenue quality, concentration risk, and growth trajectory. Your answer helps us understand the current baseline and what moves the number.</div>
+      <textarea name="a21" rows="3" placeholder="I believe the business is worth approximately $[X] based on [revenue multiple / EBITDA / asset value / gut feel]..."></textarea>
+    </div>
+
+  <!-- ══ SECTION 7: RISK & REGULATORY ══ -->
+  <div class="section-header"><div class="num">7</div><h2>Risk &amp; Regulatory</h2></div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A22</span><span class="q-text">Are all products Topicz distributes covered by valid FDA permits or pre-market authorization (PMTA) where required?</span></div>
+      <div class="q-why"><strong>Context</strong>The FDA has been aggressively enforcing PMTA requirements for ENDS and newer nicotine products. Distributing a product that lacks a valid FDA authorization exposes Topicz to enforcement action — and makes that product category unavailable online entirely. This is a clean-up item before any product category goes digital.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a22" value="Yes – all products are covered" /><span>Yes — all products we carry are covered by applicable authorizations</span></label>
+        <label><input type="radio" name="a22" value="Mostly – some newer products may need review" /><span>Mostly — some newer products may need authorization review</span></label>
+        <label><input type="radio" name="a22" value="Not sure – haven't done a full review" /><span>Not sure — haven't done a comprehensive review</span></label>
+        <label><input type="radio" name="a22" value="Known gaps – working on it" /><span>Known gaps — actively working to resolve</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A23</span><span class="q-text">Are there any outstanding legal issues, regulatory inquiries, or compliance matters affecting the business?</span></div>
+      <div class="q-why"><strong>Context</strong>Pending legal or regulatory matters affect valuation, investor appetite, and sometimes the scope of what's achievable digitally. They also affect the order in which we recommend fixing things — a business under a state regulatory inquiry needs compliance resolved before launching new online channels.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a23" value="No – clean" /><span>No — no outstanding legal or regulatory matters</span></label>
+        <label><input type="radio" name="a23" value="Minor matters – routine and being handled" /><span>Minor matters — routine and being handled</span></label>
+        <label><input type="radio" name="a23" value="Significant matter – prefer to discuss" /><span>Significant matter — prefer to discuss directly</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A24</span><span class="q-text">What does Topicz see as its single biggest risk to the business over the next 3 years?</span></div>
+      <div class="q-why"><strong>Context</strong>How leadership thinks about risk reveals priorities, blind spots, and what keeps the owner up at night. Common answers include cigarette volume decline, manufacturer direct-to-retail initiatives, regulatory expansion, or key employee departure. The answer shapes how we frame the online growth strategy — growth vs. defense vs. hedge.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a24" value="Cigarette volume structural decline" /><span>Structural decline in cigarette volumes industry-wide</span></label>
+        <label><input type="radio" name="a24" value="Manufacturers going direct to retailers" /><span>Manufacturers building direct-to-retailer relationships (cutting out distributors)</span></label>
+        <label><input type="radio" name="a24" value="A competitor launching a better digital experience first" /><span>A competitor launching a B2B portal first and taking accounts</span></label>
+        <label><input type="radio" name="a24" value="Regulatory tightening – FDA, state-level" /><span>Regulatory tightening at the federal or state level</span></label>
+        <label><input type="radio" name="a24" value="Losing a major account" /><span>Losing one or more major accounts</span></label>
+        <label><input type="radio" name="a24" value="Key person dependency" /><span>Key person dependency — business relies too heavily on one or two people</span></label>
+        <label><input type="radio" name="a24" value="Other" /><span>Other</span></label>
+      </div>
+      <textarea name="a24_context" rows="2" placeholder="Any context on this risk and how you're thinking about it?" style="margin-top:10px;"></textarea>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A25</span><span class="q-text">Is Topicz currently enrolled in any manufacturer scan data or incentive programs? If yes, which ones?</span> <span class="priority-high">High Priority</span></div>
+      <div class="q-why"><strong>Context</strong>Phase 1 indicated Topicz is not currently enrolled but is interested. Confirming the status here and identifying which manufacturers are in scope allows us to begin the enrollment process as an immediate action — before the portal is built. Scan data rebates are one of the fastest, lowest-effort revenue recovery opportunities available to tobacco distributors.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="a25" value="Not enrolled in any programs" /><span>Not enrolled in any scan data or rebate programs currently</span></label>
+        <label><input type="radio" name="a25" value="Enrolled with Altria" /><span>Enrolled with Altria (Retail Leaders / scan data)</span></label>
+        <label><input type="radio" name="a25" value="Enrolled with RJ Reynolds" /><span>Enrolled with RJ Reynolds / BAT</span></label>
+        <label><input type="radio" name="a25" value="Enrolled with multiple manufacturers" /><span>Enrolled with multiple manufacturers</span></label>
+        <label><input type="radio" name="a25" value="Partial – enrolled but not submitting regularly" /><span>Partially enrolled — have accounts but not submitting data consistently</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label"><span class="q-num">A26</span><span class="q-text">Is there anything about Topicz's business, competitive situation, or goals that you think we should know — and that hasn't been covered in this questionnaire?</span></div>
+      <div class="q-why"><strong>Context</strong>The best insight in any advisory engagement usually comes from the thing that doesn't fit a checkbox. Use this space for anything: a pending opportunity, a relationship that matters, a constraint on timing, or simply what you'd most want a trusted advisor to understand about this business before making recommendations.</div>
+      <textarea name="a26" rows="4" placeholder="The most important thing you should know about Topicz that these questions didn't capture is..."></textarea>
+    </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-zone">
+    <div id="submit-success">
+      <div style="font-size:48px;margin-bottom:14px;">✅</div>
+      <h3>Received — thank you.</h3>
+      <p>We'll review your responses and come back with a preliminary strategic assessment within 48 hours.</p>
+    </div>
+    <div id="submit-main">
+      <h3>You're done.</h3>
+      <p>Click below to submit. Your responses are encrypted in transit and kept strictly confidential.</p>
+      <button type="button" class="btn-primary" onclick="submitAdvisory()">Submit Responses →</button>
+    </div>
+    <div id="submit-error">Submission failed. Your responses have been copied to your clipboard — please paste them into an email and send directly.</div>
+  </div>
+
+</form>
+
+<p class="privacy">Strictly confidential — prepared for Topicz. These responses will not be shared outside this engagement.</p><br/>
+
+<script>
+const FORM_ENDPOINT = 'CONFIGURE_ME';
+
+const LABELS = {
+  a1:"A1. Annual revenue",
+  a2:"A2. Gross margin",
+  a3:"A3. Revenue trend (3 years)", a3_context:"A3 trend context",
+  a4:"A4. Debt / capital structure",
+  a5:"A5. Customer concentration – top 5 accounts % of revenue",
+  a6_total:"A6a. Total accounts on file", a6_active:"A6b. Active monthly accounts",
+  a7:"A7. Average monthly order value per account",
+  a8:"A8. Credit terms extended to accounts",
+  a9:"A9. Manufacturers carried", a9_primary:"A9 primary supplier",
+  a10:"A10. Cigarettes vs. convenience revenue split",
+  a11:"A11. Distribution exclusivity",
+  a12:"A12. Primary competitors",
+  a13:"A13. Why accounts choose Topicz", a13_context:"A13 context",
+  a14:"A14. Account losses past 12 months", a14_reason:"A14 reason",
+  a15:"A15. Headcount", a15_roles:"A15 key roles",
+  a16:"A16. State license footprint",
+  a17:"A17. ERP system", a17_name:"A17 system name",
+  a18:"A18. Account-level pricing structure",
+  a19:"A19. 5-year vision / exit horizon",
+  a20:"A20. Acquisition interest received",
+  a21:"A21. Owner's estimate of business value",
+  a22:"A22. FDA PMTA / product authorization status",
+  a23:"A23. Outstanding legal or regulatory matters",
+  a24:"A24. Biggest 3-year risk", a24_context:"A24 risk context",
+  a25:"A25. Scan data / rebate program enrollment",
+  a26:"A26. Anything else we should know"
+};
+
+function getVal(name) {
+  const els = document.querySelectorAll(`[name="${name}"]`);
+  if (!els.length) return "";
+  const type = els[0].type;
+  if (type === "radio") {
+    const c = document.querySelector(`[name="${name}"]:checked`);
+    return c ? c.value : "(not answered)";
+  }
+  if (type === "checkbox") {
+    const checked = [...els].filter(e => e.checked).map(e => e.value);
+    return checked.length ? checked.join(" | ") : "(not answered)";
+  }
+  return els[0].value.trim() || "(not answered)";
+}
+
+function buildText() {
+  let body = "TOPICZ — STRATEGIC ADVISORY INTAKE\n";
+  body += "Submitted: " + new Date().toLocaleString() + "\n";
+  body += "=".repeat(60) + "\n\n";
+  for (const [key, label] of Object.entries(LABELS)) {
+    body += label + "\n→ " + getVal(key) + "\n\n";
+  }
+  return body;
+}
+
+async function submitAdvisory() {
+  const btn = document.querySelector('.btn-primary');
+  btn.textContent = 'Submitting…'; btn.disabled = true;
+
+  const payload = { _subject: 'Topicz – Strategic Advisory Intake', _submitted_at: new Date().toLocaleString() };
+  for (const [key, label] of Object.entries(LABELS)) payload[label] = getVal(key);
+
+  if (FORM_ENDPOINT !== 'CONFIGURE_ME') {
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      if (res.ok && (json.success || json.ok)) { showDone(); return; }
+    } catch(e) {}
+  }
+
+  // Fallback
+  const body = buildText();
+  if (navigator.clipboard) navigator.clipboard.writeText(body).catch(()=>{});
+  window.location.href = `mailto:kyle.schildkraut@gmail.com?subject=${encodeURIComponent('Topicz – Strategic Advisory Intake')}&body=${encodeURIComponent(body)}`;
+  showDone();
+}
+
+function showDone() {
+  document.getElementById('submit-success').style.display = 'block';
+  document.getElementById('submit-main').style.display = 'none';
+}
+</script>
+</div><!-- /page -->
+</body>
+</html>
