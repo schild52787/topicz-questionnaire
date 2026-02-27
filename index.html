@@ -538,43 +538,22 @@
     </div><!-- /section 8 -->
 
 
-    <!-- CONTACT -->
-    <div class="section">
-      <div class="section-header">
-        <div class="num">✉</div>
-        <h2>Your Contact Information</h2>
-      </div>
-      <div class="q">
-        <div class="q-label"><span class="q-num">—</span><label class="q-text">Full Name</label></div>
-        <input type="text" name="contact_name" placeholder="Your full name" />
-      </div>
-      <div class="q">
-        <div class="q-label"><span class="q-num">—</span><label class="q-text">Email Address</label></div>
-        <input type="email" name="contact_email" placeholder="your@email.com" />
-      </div>
-      <div class="q">
-        <div class="q-label"><span class="q-num">—</span><label class="q-text">Role / Title</label></div>
-        <input type="text" name="contact_role" placeholder="e.g. CEO, VP Sales, Operations Director..." />
-      </div>
-      <div class="q">
-        <div class="q-label"><span class="q-num">—</span><label class="q-text">Best time to connect for a follow-up call</label></div>
-        <input type="text" name="contact_time" placeholder="e.g. Weekday mornings, Tuesday afternoons..." />
-      </div>
+
     </div>
 
     <div class="submit-zone">
-      <p>Click below to generate your responses. Your email client will open pre-addressed — just review and hit Send.<br/>Your answers are also copied to clipboard automatically as a backup.</p>
+      <p>Click below to generate your responses. Your email client will open pre-addressed with all 30 answers — just review and hit Send.</p>
       <button type="button" class="btn-primary" onclick="submitForm()">Generate &amp; Send Responses →</button>
       <div id="copy-feedback">
         <strong>✅ Your email client opened with all responses included.</strong>
-        If it didn't open — your answers are already copied to your clipboard. Paste into an email to <strong>kyle.schildkraut@gmail.com</strong> with subject "Topicz – Online Growth Discovery".
+        If it didn't open — your answers have been copied to your clipboard. Please paste them into an email and send directly to your contact.
       </div>
     </div>
 
   </form>
 </div>
 
-<p class="privacy">Your responses are confidential and used solely for the purposes of this engagement. © Topicz</p><br/>
+<p class="privacy">Your responses are confidential. No personal identifying information is collected through this form.</p><br/>
 
 <script>
 const LABELS = {
@@ -608,8 +587,6 @@ const LABELS = {
   q28:"28. #1 priority in next 90 days",
   q29:"29. What has been tried and didn't work",
   q30:"30. Definition of success and how it would be measured",
-  contact_name:"Name", contact_email:"Email",
-  contact_role:"Role / Title", contact_time:"Best time for follow-up call"
 };
 
 function getVal(name) {
