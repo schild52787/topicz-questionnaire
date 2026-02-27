@@ -581,10 +581,15 @@
 <p class="privacy">Confidential — prepared specifically for Topicz. Your responses will not be shared outside of this engagement.</p><br/>
 
 <script>
-// ── FORMSPREE ENDPOINT ──────────────────────────────────────────────────────
-// To activate: go to formspree.io → New Form → copy the endpoint URL and paste below
+// ── FORM SUBMISSION CONFIG ───────────────────────────────────────────────────
+// Web3Forms (primary — simplest to activate):
+//   1. Go to https://web3forms.com
+//   2. Enter kyle.schildkraut@gmail.com → click the link in the email they send
+//   3. Copy your access key and paste it below
+const WEB3FORMS_KEY = 'CONFIGURE_ME';
+// Formspree (alternative): go to formspree.io → New Form → paste endpoint below
 const FORMSPREE_ENDPOINT = 'CONFIGURE_ME';
-// ────────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 
 const LABELS = {
   q1:"1. Business model – B2B vs DTC structure",
@@ -665,7 +670,20 @@ async function submitForm() {
     payload[label] = getVal(key);
   }
 
-  // Try Formspree if configured
+  // ── Try Web3Forms first ──
+  if (WEB3FORMS_KEY !== 'CONFIGURE_ME') {
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...payload })
+      });
+      const json = await res.json();
+      if (res.ok && json.success) { showSuccess(btn); return; }
+    } catch (e) { /* fall through */ }
+  }
+
+  // ── Try Formspree second ──
   if (FORMSPREE_ENDPOINT !== 'CONFIGURE_ME') {
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -673,28 +691,23 @@ async function submitForm() {
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(payload)
       });
-      if (res.ok) {
-        document.getElementById('submit-success').style.display = 'block';
-        btn.style.display = 'none';
-        document.querySelector('.submit-zone p') && (document.querySelector('.submit-zone p').style.display = 'none');
-        document.querySelector('.next-steps').style.marginTop = '24px';
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        return;
-      }
-    } catch (e) { /* fall through to fallback */ }
-    document.getElementById('submit-error').style.display = 'block';
-    btn.textContent = originalText;
-    btn.disabled = false;
-    return;
+      if (res.ok) { showSuccess(btn); return; }
+    } catch (e) { /* fall through */ }
   }
 
-  // Fallback: not yet configured — use mailto + clipboard
+  // ── Fallback: mailto + clipboard ──
   const body = buildResponseText();
   if (navigator.clipboard) navigator.clipboard.writeText(body).catch(()=>{});
   const subject = "Topicz – Online Growth Discovery (Phase 1)";
   window.location.href = `mailto:kyle.schildkraut@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  showSuccess(btn);
+}
+
+function showSuccess(btn) {
   document.getElementById('submit-success').style.display = 'block';
-  btn.style.display = 'none';
+  if (btn) btn.style.display = 'none';
+  const p = document.querySelector('.submit-zone > p');
+  if (p) p.style.display = 'none';
   window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 }
 </script>
