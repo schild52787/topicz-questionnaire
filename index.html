@@ -537,6 +537,180 @@
 
     </div>
 
+    <!-- SECTION 9: FOLLOW-UP -->
+    <div class="section">
+      <div class="section-header"><div class="num">9</div><h2>Follow-Up Questions — Based on Your Phase 1 Responses</h2></div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F1</span><label class="q-text">Q5 follow-up: You selected "Other" for your accounting/ERP system. What system does Topicz actually use?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>The specific system determines almost everything about the technical build. Tobacco-native systems like DAC ERP or ManageMore have built-in scan data submission, MSA MULTICAT reporting, and B2B portal integrations. A custom legacy system or general ERP like Sage or NetSuite requires custom middleware. Knowing the system name lets us scope the integration work accurately — without it, any timeline or cost estimate for the portal is a guess.</div>
+        <textarea name="f1" rows="2" placeholder="We use [system name, e.g. DAC ERP, ManageMore, Sage, custom-built, etc.]..."></textarea>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F2</span><label class="q-text">Which states does Topicz currently hold tobacco distribution licenses in?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Your license footprint is your immediate online addressable market. A B2B portal can only serve retailers in states where you're licensed to distribute — and every unlicensed state you expand into before launching is more potential revenue on day one. Knowing the current footprint lets us prioritize license expansions that give the highest return, and ensures the portal is geoblocked correctly from the start (selling into an unlicensed state carries significant regulatory risk).</div>
+        <textarea name="f2" rows="2" placeholder="Currently licensed in: [list states or regions, e.g. MN, WI, IA, ND...]"></textarea>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F3</span><label class="q-text">Q12 follow-up: You're on a standard processor. Which one specifically — Stripe, PayPal, or Square? And approximately how much does Topicz process per month?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>All three are high-risk for tobacco, but the urgency differs. Stripe and PayPal have automated detection systems that can trigger account termination with no warning. Square is slightly slower but equally exposed. Monthly volume tells us the financial risk: a business processing $50K/month has a very different exposure than one processing $500K/month. This determines how quickly we need to move on the processor switch — and whether a business interruption contingency plan is needed during the transition.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f3_processor" value="Stripe" /><span>Stripe</span></label>
+          <label><input type="radio" name="f3_processor" value="PayPal" /><span>PayPal</span></label>
+          <label><input type="radio" name="f3_processor" value="Square" /><span>Square</span></label>
+          <label><input type="radio" name="f3_processor" value="Multiple of the above" /><span>Multiple of the above</span></label>
+          <label><input type="radio" name="f3_processor" value="Other standard processor" /><span>Other standard processor</span></label>
+        </div>
+        <div style="margin-top:10px;">
+          <input type="text" name="f3_volume" placeholder="Approximate monthly processing volume: $___" style="width:100%;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;background:white;" />
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F4</span><label class="q-text">Which tobacco manufacturers does Topicz carry products from?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Manufacturer relationships determine which scan data and rebate programs are available to Topicz. Altria (Philip Morris), RJ Reynolds/BAT, and ITG Brands each have distinct scan data portals, enrollment processes, and rebate structures. Knowing which manufacturers you carry tells us exactly which programs to enroll in — and gives us a concrete dollar estimate for how much incremental revenue scan data enrollment could unlock based on your volume.</div>
+        <div class="radio-group">
+          <label><input type="checkbox" name="f4" value="Altria / Philip Morris USA" /><span>Altria / Philip Morris USA (Marlboro, Marlboro Black, etc.)</span></label>
+          <label><input type="checkbox" name="f4" value="RJ Reynolds / BAT" /><span>RJ Reynolds / BAT (Camel, Newport, Pall Mall, Natural American Spirit)</span></label>
+          <label><input type="checkbox" name="f4" value="ITG Brands / Commonwealth Brands" /><span>ITG Brands / Commonwealth Brands (Winston, Kool, Maverick)</span></label>
+          <label><input type="checkbox" name="f4" value="Standard Register / Liggett" /><span>Standard Register / Liggett (Eagle 20's, Pyramid)</span></label>
+          <label><input type="checkbox" name="f4" value="Swedish Match (Zyn, General)" /><span>Swedish Match / PMI (Zyn pouches, General snus)</span></label>
+          <label><input type="checkbox" name="f4" value="Other – enter below" /><span>Other manufacturers</span></label>
+        </div>
+        <textarea name="f4_other" rows="1" placeholder="Other manufacturers: ..." style="margin-top:8px;"></textarea>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F5</span><label class="q-text">How many active retail accounts does Topicz currently serve?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Account count is the denominator for every B2B portal ROI calculation. If Topicz serves 200 accounts, even a 50% portal adoption rate is 100 accounts placing self-serve orders — a meaningful cost reduction. If you serve 2,000 accounts, the economics change dramatically. This number also drives the platform decision: a portal for 100 accounts can be simple and fast to build; a portal for 2,000 accounts needs robust search, sorting, account-level pricing, and automated onboarding.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f5" value="Under 100 accounts" /><span>Under 100 accounts</span></label>
+          <label><input type="radio" name="f5" value="100 – 300 accounts" /><span>100 – 300 accounts</span></label>
+          <label><input type="radio" name="f5" value="300 – 500 accounts" /><span>300 – 500 accounts</span></label>
+          <label><input type="radio" name="f5" value="500 – 1,000 accounts" /><span>500 – 1,000 accounts</span></label>
+          <label><input type="radio" name="f5" value="Over 1,000 accounts" /><span>Over 1,000 accounts</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F6</span><label class="q-text">What is the average dollar value of a single order from a retail account?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Average order value drives the economics of the portal from two directions. First, the cost savings calculation: moving a $500 average order from phone to portal saves the same $10–15 in labor as moving a $50 order — but the $500 order is a much larger share of revenue. Second, the platform minimums: some B2B portal platforms require minimum order values for compliance reasons. Knowing your average also flags outlier accounts that may need custom pricing or approval workflows in the portal.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f6" value="Under $100" /><span>Under $100</span></label>
+          <label><input type="radio" name="f6" value="$100 – $500" /><span>$100 – $500</span></label>
+          <label><input type="radio" name="f6" value="$500 – $2,000" /><span>$500 – $2,000</span></label>
+          <label><input type="radio" name="f6" value="$2,000 – $10,000" /><span>$2,000 – $10,000</span></label>
+          <label><input type="radio" name="f6" value="Over $10,000" /><span>Over $10,000</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F7</span><label class="q-text">Does your current system export transaction-level data per retailer — date, SKU, quantity, price — in a structured format?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Scan data programs require structured, transaction-level submission — not summary reports. If your system can already export this data electronically, scan data enrollment is fast (weeks). If it requires manual extraction or custom reporting, that's a back-office fix before enrollment. This question also determines whether scan data can realistically be connected to a new portal from day one, or whether it's a Phase 2 integration after initial portal launch.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f7" value="Yes – automated export available" /><span>Yes — system exports this data automatically (CSV, API, or EDI)</span></label>
+          <label><input type="radio" name="f7" value="Yes – but requires manual extraction" /><span>Yes — but it requires manual extraction or custom reports</span></label>
+          <label><input type="radio" name="f7" value="Partial – some data available, some missing" /><span>Partial — some fields available, some gaps</span></label>
+          <label><input type="radio" name="f7" value="No – not available in current system" /><span>No — current system doesn't track at this level</span></label>
+          <label><input type="radio" name="f7" value="Not sure" /><span>Not sure</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F8</span><label class="q-text">When retail customers currently order, how do they reach you? (Select all that apply)</label></div>
+        <div class="q-why"><strong>Why we ask</strong>The mix of phone, text, and rep visits tells us where portal adoption resistance is most likely. Accounts that currently text orders are the easiest to migrate — they're already using a digital interface. Accounts that rely on rep visits often do so for relationship reasons or because they use the rep to resolve questions; these accounts need a different onboarding approach than purely convenience-driven phone orderers. Knowing the breakdown helps us design a realistic adoption timeline and a change management plan.</div>
+        <div class="radio-group">
+          <label><input type="checkbox" name="f8" value="Inbound phone calls" /><span>Inbound phone calls to Topicz</span></label>
+          <label><input type="checkbox" name="f8" value="Text / SMS" /><span>Text / SMS messages</span></label>
+          <label><input type="checkbox" name="f8" value="Email" /><span>Email</span></label>
+          <label><input type="checkbox" name="f8" value="In-person rep visit" /><span>In-person sales rep visits</span></label>
+          <label><input type="checkbox" name="f8" value="Fax" /><span>Fax (yes, it still happens)</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F9</span><label class="q-text">What is Topicz's approximate annual revenue? (We keep this strictly confidential — it calibrates every recommendation we make.)</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Revenue scale determines the right technology architecture, the right platform investment, and what ROI thresholds are meaningful. A portal that costs $75K to build makes clear financial sense at $5M revenue; at $500K revenue, we'd recommend a lighter-weight approach. This number also calibrates the scan data enrollment opportunity — we can estimate the dollar value of uncaptured rebates as a percentage of your manufacturer purchase volume.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f9" value="Under $1M" /><span>Under $1M</span></label>
+          <label><input type="radio" name="f9" value="$1M – $5M" /><span>$1M – $5M</span></label>
+          <label><input type="radio" name="f9" value="$5M – $20M" /><span>$5M – $20M</span></label>
+          <label><input type="radio" name="f9" value="$20M – $50M" /><span>$20M – $50M</span></label>
+          <label><input type="radio" name="f9" value="$50M+" /><span>$50M+</span></label>
+          <label><input type="radio" name="f9" value="Prefer not to say" /><span>Prefer not to say</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F10</span><label class="q-text">What percentage of revenue comes from cigarettes vs. convenience / non-tobacco products?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Product mix drives compliance architecture. A business that is 90% cigarettes has very different online constraints than one that is 60% convenience/non-tobacco. The convenience and non-tobacco categories have fewer shipping restrictions, less complex excise tax, and broader DTC potential — and as cigarette volumes continue their long-term structural decline, growing the online channel for non-tobacco categories may be a strategic priority worth planning for now.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f10" value="90%+ cigarettes" /><span>90%+ cigarettes, small convenience mix</span></label>
+          <label><input type="radio" name="f10" value="70–90% cigarettes" /><span>70–90% cigarettes, 10–30% convenience</span></label>
+          <label><input type="radio" name="f10" value="50–70% cigarettes" /><span>50–70% cigarettes, 30–50% convenience</span></label>
+          <label><input type="radio" name="f10" value="Under 50% cigarettes" /><span>Under 50% cigarettes — convenience is significant</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F11</span><label class="q-text">What is the biggest concern Topicz has about moving retail accounts to a self-service ordering portal?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Internal resistance is the #1 reason B2B portal rollouts fail — not technical problems. The concerns vary: some businesses worry accounts will leave if they feel deprioritized; some worry reps will resist the change; some worry older accounts won't adopt digital. Whatever the concern is, naming it now means we can design around it — whether that's a rep-assisted onboarding flow, a hybrid model where phone remains available, or a loyalty program that makes portal adoption feel like an upgrade rather than a demotion.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f11" value="Retail accounts won't adopt it – prefer phone/rep" /><span>Retail accounts won't adopt it — they prefer calling or the rep relationship</span></label>
+          <label><input type="radio" name="f11" value="Sales reps will resist – threatens their role" /><span>Sales reps will resist — they see it as a threat to their role</span></label>
+          <label><input type="radio" name="f11" value="Tech complexity – accounts don't use digital tools" /><span>Technology complexity — our accounts aren't tech-savvy</span></label>
+          <label><input type="radio" name="f11" value="Losing the relationship edge" /><span>Losing the personal relationship that keeps accounts loyal to us</span></label>
+          <label><input type="radio" name="f11" value="Implementation risk – disrupting current operations" /><span>Implementation risk — disrupting operations that currently work fine</span></label>
+          <label><input type="radio" name="f11" value="No major concerns" /><span>No major concerns — accounts are ready for this</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F12</span><label class="q-text">Are you aware of any competitors or tobacco distributors in your region who have already built online ordering portals?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Competitor intelligence helps calibrate urgency. If competitors in your market have already launched portals, retail accounts will eventually compare their experience to yours — and the window to be the first-mover advantage is closing. If no competitors have gone digital yet, there's an opportunity to define the standard. Either way, the answer shapes how aggressively we recommend moving on Phase 1.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f12" value="Yes – one or more have portals" /><span>Yes — one or more competitors have launched online portals</span></label>
+          <label><input type="radio" name="f12" value="Partially – some have basic websites but not ordering" /><span>Partially — some have websites but not real ordering capability</span></label>
+          <label><input type="radio" name="f12" value="No – industry still analog in our region" /><span>No — the industry is still mostly analog in our region</span></label>
+          <label><input type="radio" name="f12" value="Not sure" /><span>Not sure</span></label>
+        </div>
+        <textarea name="f12_detail" rows="1" placeholder="If yes — who, and what do they do well or poorly online?" style="margin-top:8px;"></textarea>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F13</span><label class="q-text">Does Topicz have account-level pricing — i.e., do different retailers pay different prices for the same product?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>Account-level pricing is one of the most common technical complications in B2B portal builds. If every account sees the same price, the portal is straightforward. If you have tiered pricing, promotional pricing per account, or negotiated rates, the portal needs to display each account's correct prices after login — which requires integration with your ERP's pricing data. Knowing this upfront prevents a common scenario where a portal gets built, then accounts log in and see the wrong prices, destroying trust on day one.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f13" value="Yes – different accounts have different pricing" /><span>Yes — different accounts have different prices for the same products</span></label>
+          <label><input type="radio" name="f13" value="Standard pricing for all – with occasional manual exceptions" /><span>Standard pricing for all accounts, with occasional manual exceptions</span></label>
+          <label><input type="radio" name="f13" value="Tiered pricing by volume or account type" /><span>Tiered pricing by volume or account type / category</span></label>
+          <label><input type="radio" name="f13" value="Uniform pricing across all accounts" /><span>Uniform pricing — all accounts see the same prices</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F14</span><label class="q-text">Where is Topicz's current website hosted, and what does it currently do?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>The current site is either a foundation to build on or something to replace. A site that already has product listings, a customer login, or CMS infrastructure is a head start. A brochure-only site built in Wix or Squarespace may be easier to replace than extend. Knowing the hosting environment and current functionality tells us whether Phase 1 is an upgrade or a rebuild — which has significant implications for timeline and cost.</div>
+        <div class="radio-group">
+          <label><input type="radio" name="f14_function" value="Brochure only – no product info or ordering" /><span>Brochure only — company info, no product details or ordering</span></label>
+          <label><input type="radio" name="f14_function" value="Has product catalog but no ordering" /><span>Has product catalog / pricing but no online ordering</span></label>
+          <label><input type="radio" name="f14_function" value="Has a contact or order form" /><span>Has a contact or order request form</span></label>
+          <label><input type="radio" name="f14_function" value="No website currently" /><span>No current website</span></label>
+          <label><input type="radio" name="f14_function" value="Other" /><span>Other</span></label>
+        </div>
+        <input type="text" name="f14_url" placeholder="Website URL (if it exists): https://..." style="width:100%;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;background:white;margin-top:8px;" />
+      </div>
+
+      <div class="q">
+        <div class="q-label"><span class="q-num">F15</span><label class="q-text">If you could change one thing about how Topicz takes orders today — what would it be?</label></div>
+        <div class="q-why"><strong>Why we ask</strong>This question consistently surfaces the most honest and actionable feedback in the entire questionnaire. The answer is almost always the right starting point for Phase 1. Whether it's "stop getting woken up by texts at midnight," "stop re-entering the same order twice," or "stop losing track of what accounts ordered last week" — the answer tells us where the daily pain is. And solving daily pain is the fastest path to buy-in from both the internal team and the retail accounts who will use what we build.</div>
+        <textarea name="f15" rows="3" placeholder="If I could fix one thing about how orders come in today, it would be..."></textarea>
+      </div>
+
+    </div>
+
     <!-- SUBMIT -->
     <div class="submit-zone">
       <h3>You're done — thank you.</h3>
@@ -621,7 +795,23 @@ const LABELS = {
   q27:"27. Single highest priority in next 90 days",
   q28:"28. What has been tried and didn't work",
   q29:"29. Competitors / benchmarks Topicz looks up to online",
-  q30:"30. Definition of success and how it would be measured"
+  q30:"30. Definition of success and how it would be measured",
+  f1:"F1. ERP system name (Q5 follow-up — said Other)",
+  f2:"F2. States currently licensed in",
+  f3_processor:"F3a. Payment processor specifically",
+  f3_volume:"F3b. Monthly processing volume",
+  f4:"F4. Tobacco manufacturers carried", f4_other:"F4 other manufacturers",
+  f5:"F5. Active retail account count",
+  f6:"F6. Average order size",
+  f7:"F7. Transaction-level data export capability",
+  f8:"F8. How retail customers currently order",
+  f9:"F9. Approximate annual revenue",
+  f10:"F10. Cigarettes vs. convenience revenue split",
+  f11:"F11. Biggest concern about B2B portal adoption",
+  f12:"F12. Competitor portal awareness", f12_detail:"F12 competitor detail",
+  f13:"F13. Account-level pricing structure",
+  f14_function:"F14a. Current website function", f14_url:"F14b. Current website URL",
+  f15:"F15. One thing to change about how orders come in today"
 };
 
 function getVal(name) {
