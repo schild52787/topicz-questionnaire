@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Topicz — Building Your Online Business</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --brand: #1a1a2e; --accent: #e94560; --accent2: #0f3460; --gold: #f59e0b;
+  --green: #10b981; --red: #ef4444; --blue: #3b82f6;
+  --light: #f8f9fc; --border: #e2e8f0; --text: #1e293b; --muted: #64748b;
+}
+
+html, body { height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d0d1a; color: white; }
+
+/* ── SLIDE CONTAINER ── */
+#deck { width: 100%; height: 100vh; display: flex; flex-direction: column; }
+
+/* ── NAV BAR ── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,10,20,0.95); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 24px; height: 52px;
+}
+#nav .brand { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.5; }
+#nav .slide-counter { font-size: 13px; opacity: 0.6; font-variant-numeric: tabular-nums; }
+#nav .nav-btns { display: flex; gap: 8px; align-items: center; }
+#nav button {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  color: white; border-radius: 6px; padding: 5px 14px; font-size: 13px;
+  cursor: pointer; transition: background 0.15s;
+}
+#nav button:hover { background: rgba(255,255,255,0.15); }
+#nav button:disabled { opacity: 0.25; cursor: default; }
+#nav .print-btn { background: var(--accent); border-color: var(--accent); }
+
+/* ── PROGRESS BAR ── */
+#progress { position: fixed; top: 52px; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.06); z-index: 99; }
+#progress-bar { height: 100%; background: var(--accent); transition: width 0.3s ease; }
+
+/* ── SLIDES ── */
+#slides { width: 100%; height: 100vh; position: relative; margin-top: 54px; height: calc(100vh - 54px); }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 48px 64px; text-align: left;
+  opacity: 0; transform: translateX(60px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none; overflow-y: auto;
+}
+.slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
+.slide.prev { opacity: 0; transform: translateX(-60px); }
+
+/* ── SLIDE BACKGROUNDS ── */
+.slide-dark { background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 100%); }
+.slide-brand { background: linear-gradient(135deg, var(--brand) 0%, var(--accent2) 100%); }
+.slide-accent { background: linear-gradient(135deg, #2d0a12 0%, #1a1a2e 100%); }
+.slide-light { background: #f8f9fc; color: var(--text); }
+.slide-light .s-eyebrow { color: var(--accent); }
+.slide-light .s-title { color: var(--text); }
+.slide-light .s-sub { color: var(--muted); }
+.slide-light .divider { background: var(--border); }
+
+/* ── SLIDE CONTENT ── */
+.slide-inner { width: 100%; max-width: 960px; margin: 0 auto; }
+.s-eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; opacity: 0.9; }
+.s-title { font-size: clamp(28px, 4vw, 52px); font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
+.s-sub { font-size: clamp(14px, 1.8vw, 18px); opacity: 0.7; line-height: 1.6; max-width: 700px; }
+.divider { width: 48px; height: 3px; background: var(--accent); margin: 20px 0; border-radius: 2px; }
+
+/* ── GRID LAYOUTS ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+@media (max-width: 700px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+/* ── CARDS ── */
+.card {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 20px;
+}
+.card-light { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px; color: var(--text); }
+.card h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.card p, .card li { font-size: 13px; opacity: 0.8; line-height: 1.6; }
+.card ul { padding-left: 16px; margin-top: 6px; }
+.card ul li { margin-bottom: 4px; }
+.card-light h3 { color: var(--text); }
+.card-light p, .card-light li { color: var(--muted); opacity: 1; }
+
+/* ── STAT BLOCKS ── */
+.stat-block { text-align: center; padding: 24px 16px; }
+.stat-num { font-size: clamp(28px, 4vw, 48px); font-weight: 800; color: var(--accent); line-height: 1; }
+.stat-label { font-size: 12px; opacity: 0.6; margin-top: 6px; letter-spacing: 0.5px; }
+.stat-source { font-size: 10px; opacity: 0.35; margin-top: 4px; }
+
+/* ── TABLE ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { padding: 10px 14px; text-align: left; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.5; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.data-table td { padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table-light th { border-bottom-color: var(--border); opacity: 1; color: var(--muted); }
+.data-table-light td { border-bottom-color: var(--border); color: var(--text); }
+
+/* ── BADGES ── */
+.badge { display: inline-block; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
+.badge-green { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+.badge-red { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+.badge-yellow { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+.badge-blue { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+
+/* ── INFO NEEDED ── */
+.info-needed {
+  background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.35);
+  border-left: 3px solid var(--gold); border-radius: 8px;
+  padding: 10px 14px; margin-top: 12px;
+  font-size: 12px; color: #fcd34d;
+}
+.info-needed strong { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 3px; }
+
+/* ── ROADMAP PHASES ── */
+.phase { border-radius: 10px; padding: 16px 20px; }
+.phase-1 { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3); }
+.phase-2 { background: rgba(233,69,96,0.12); border: 1px solid rgba(233,69,96,0.3); }
+.phase-3 { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); }
+.phase h4 { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.phase-1 h4 { color: #60a5fa; }
+.phase-2 h4 { color: #f87171; }
+.phase-3 h4 { color: #34d399; }
+.phase ul { list-style: none; font-size: 13px; }
+.phase li { padding: 3px 0; opacity: 0.85; }
+.phase li::before { content: "→ "; opacity: 0.5; }
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; }
+.checklist li { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; font-size: 14px; }
+.checklist li .icon { flex-shrink: 0; margin-top: 2px; font-size: 15px; }
+
+/* ── TITLE SLIDE SPECIAL ── */
+.title-tag { display: inline-block; background: var(--accent); border-radius: 20px; padding: 6px 18px; font-size: 12px; font-weight: 700; letter-spacing: 1px; margin-bottom: 24px; }
+.title-meta { display: flex; gap: 24px; margin-top: 32px; flex-wrap: wrap; }
+.title-meta span { font-size: 13px; opacity: 0.5; }
+.title-meta span strong { opacity: 1; color: white; }
+
+/* ── QUOTE ── */
+.pullquote { font-size: clamp(18px, 2.5vw, 28px); font-weight: 700; line-height: 1.4; border-left: 4px solid var(--accent); padding-left: 20px; margin: 20px 0; }
+
+/* PRINT */
+@media print {
+  #nav, #progress { display: none !important; }
+  #slides { position: static; height: auto; overflow: visible; margin-top: 0; }
+  .slide { position: relative; opacity: 1 !important; transform: none !important; height: 100vh; page-break-after: always; padding: 48px; }
+  html, body { overflow: visible !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div id="nav">
+  <div class="brand">Topicz · Confidential</div>
+  <div id="counter" class="slide-counter">1 / 16</div>
+  <div class="nav-btns">
+    <button id="prevBtn" onclick="prevSlide()" disabled>← Prev</button>
+    <button id="nextBtn" onclick="nextSlide()">Next →</button>
+    <button class="print-btn" onclick="window.print()">⬇ Print / PDF</button>
+  </div>
+</div>
+<div id="progress"><div id="progress-bar"></div></div>
+
+<div id="slides">
+
+<!-- ════════════════════════════
+     SLIDE 1 — TITLE
+════════════════════════════ -->
+<div class="slide slide-brand active" id="slide-1">
+  <div class="slide-inner">
+    <div class="title-tag">PREPARED FOR TOPICZ</div>
+    <div class="s-title" style="font-size:clamp(32px,5vw,64px);">Building Your<br/>Online Business</div>
+    <div class="s-sub" style="max-width:580px;margin-top:16px;">A researched strategy for tobacco and nicotine product companies entering — or scaling — the digital channel in 2025–2026.</div>
+    <div class="title-meta">
+      <span><strong>16</strong> slides</span>
+      <span><strong>Phase 1</strong> of engagement</span>
+      <span><strong>Confidential</strong></span>
+      <span><strong>2025–2026</strong></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 2 — THE OPPORTUNITY
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-2">
+  <div class="slide-inner">
+    <div class="s-eyebrow">The Market Opportunity</div>
+    <div class="s-title">The online tobacco channel<br/>is growing fast — and underserved</div>
+    <div class="divider"></div>
+    <div class="grid-4" style="margin-top:24px;">
+      <div class="card stat-block">
+        <div class="stat-num">$2B</div>
+        <div class="stat-label">US Smoking Supplies<br/>eCommerce by 2025</div>
+        <div class="stat-source">ecommercedb.com</div>
+      </div>
+      <div class="card stat-block">
+        <div class="stat-num">40%</div>
+        <div class="stat-label">of nicotine pouch sales<br/>now happen online</div>
+        <div class="stat-source">StellarMR, 2024</div>
+      </div>
+      <div class="card stat-block">
+        <div class="stat-num">29.6%</div>
+        <div class="stat-label">CAGR — US nicotine<br/>pouches 2025–2030</div>
+        <div class="stat-source">Grand View Research</div>
+      </div>
+      <div class="card stat-block">
+        <div class="stat-num">$965B</div>
+        <div class="stat-label">Global tobacco market<br/>in 2024</div>
+        <div class="stat-source">GM Insights, 2025</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px;padding:16px 20px;">
+      <p style="font-size:14px;line-height:1.7;opacity:0.85;">The digital shift in tobacco is accelerating — driven by nicotine pouches, premium cigars, and accessories where online restrictions are lightest. The businesses that build compliant, well-integrated online channels now will be structurally advantaged as the market shifts. Those that wait will find competitors have taken the shelf space.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 3 — LANDSCAPE CHANGE
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-3">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Understanding the Playing Field</div>
+    <div class="s-title">What changed — and what it means for Topicz</div>
+    <div class="divider"></div>
+    <div class="grid-2" style="margin-top:20px;gap:16px;">
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="color:#f87171;">⚠️ 2021 PACT Act Expansion</h3>
+          <ul>
+            <li>USPS banned from delivering ALL ENDS (e-cigs/vaping) DTC</li>
+            <li>FedEx and UPS followed with their own ENDS bans</li>
+            <li>Cigarettes: most states restrict DTC shipment</li>
+            <li>Non-compliance = significant federal penalties</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="color:#f87171;">⚠️ FDA Age Verification Tightening (2026)</h3>
+          <ul>
+            <li>FDA has updated age verification standards for online sales</li>
+            <li>Self-attestation checkboxes no longer sufficient</li>
+            <li>Electronic ID scanning and verified databases now expected</li>
+            <li>Non-compliant online stores face enforcement action</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3 style="color:#34d399;">✅ Where Online Is Wide Open</h3>
+          <ul>
+            <li>Premium cigars and cigarillos — growing online market</li>
+            <li>Smokeless tobacco (dip, snuff) — DTC viable with ASR</li>
+            <li>Nicotine pouches — 40% of sales online already</li>
+            <li>Accessories — no nicotine, minimal restrictions</li>
+            <li>B2B portal (retailer ordering) — no consumer regs apply</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="color:#60a5fa;">📈 The B2B Digital Shift</h3>
+          <ul>
+            <li>80% of B2B buyers prefer to self-serve vs. talk to a rep</li>
+            <li>Distributors with portals process orders at 1/5 the cost</li>
+            <li>Order frequency increases when buyers can order 24/7</li>
+            <li>Industry-specific platforms (OrderJump) built for tobacco</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 4 — PRODUCT MATRIX
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-4">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Product Strategy</div>
+    <div class="s-title">Not all products are equal online</div>
+    <div class="divider"></div>
+    <table class="data-table" style="margin-top:20px;">
+      <thead>
+        <tr>
+          <th>Product Category</th>
+          <th>DTC Online Viability</th>
+          <th>B2B Portal Viability</th>
+          <th>Key Constraint</th>
+          <th>Recommended Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Nicotine Pouches</strong></td>
+          <td><span class="badge badge-green">✅ High</span></td>
+          <td><span class="badge badge-green">✅ High</span></td>
+          <td>Age verification only</td>
+          <td><span class="badge badge-green">Start here</span></td>
+        </tr>
+        <tr>
+          <td><strong>Premium Cigars</strong></td>
+          <td><span class="badge badge-green">✅ High</span></td>
+          <td><span class="badge badge-green">✅ High</span></td>
+          <td>Age verification + some state OTP</td>
+          <td><span class="badge badge-green">Start here</span></td>
+        </tr>
+        <tr>
+          <td><strong>Smokeless Tobacco</strong></td>
+          <td><span class="badge badge-yellow">⚠️ Moderate</span></td>
+          <td><span class="badge badge-green">✅ High</span></td>
+          <td>State restrictions vary; ASR required</td>
+          <td><span class="badge badge-blue">Phase 2</span></td>
+        </tr>
+        <tr>
+          <td><strong>Accessories</strong></td>
+          <td><span class="badge badge-green">✅ High</span></td>
+          <td><span class="badge badge-green">✅ High</span></td>
+          <td>Minimal — no nicotine content</td>
+          <td><span class="badge badge-green">Start here</span></td>
+        </tr>
+        <tr>
+          <td><strong>Cigarettes</strong></td>
+          <td><span class="badge badge-red">❌ Very Limited</span></td>
+          <td><span class="badge badge-yellow">⚠️ Moderate</span></td>
+          <td>State DTC bans; complex tax compliance</td>
+          <td><span class="badge badge-red">B2B only</span></td>
+        </tr>
+        <tr>
+          <td><strong>ENDS / Vaping</strong></td>
+          <td><span class="badge badge-red">❌ Banned DTC</span></td>
+          <td><span class="badge badge-yellow">⚠️ Restricted</span></td>
+          <td>PACT Act — USPS/FedEx/UPS ban DTC</td>
+          <td><span class="badge badge-red">Hold</span></td>
+        </tr>
+        <tr>
+          <td><strong>Hemp / CBD</strong></td>
+          <td><span class="badge badge-yellow">⚠️ Moderate</span></td>
+          <td><span class="badge badge-yellow">⚠️ Moderate</span></td>
+          <td>State law patchwork; payment processor risk</td>
+          <td><span class="badge badge-blue">Evaluate</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="info-needed" style="margin-top:16px;">
+      <strong>⚠️ Info Needed from Topicz</strong>
+      Which categories represent the majority of current revenue, and which are being considered for online expansion? Questionnaire Q2–Q3 will confirm this.
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 5 — THREE PATHS
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-5">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Strategic Framework</div>
+    <div class="s-title">Three paths to online growth<br/>— only one is right for Topicz today</div>
+    <div class="divider"></div>
+    <div class="grid-3" style="margin-top:24px;">
+      <div class="card" style="border-color:rgba(59,130,246,0.4);background:rgba(59,130,246,0.08);">
+        <h3 style="color:#60a5fa;font-size:16px;">Path A</h3>
+        <h3 style="color:white;margin-top:4px;font-size:18px;">B2B Self-Service Portal</h3>
+        <div style="margin:12px 0;height:1px;background:rgba(255,255,255,0.08);"></div>
+        <p style="margin-bottom:10px;">Retail customers self-order 24/7. Replaces phone and rep-driven ordering. Instant ROI.</p>
+        <ul style="font-size:13px;padding-left:16px;opacity:0.8;margin-bottom:12px;">
+          <li>Best for: distributors</li>
+          <li>Timeline: 60–90 days to launch</li>
+          <li>Investment: $25K–$75K</li>
+          <li>ROI: 40–60% cost-per-order reduction</li>
+        </ul>
+        <span class="badge badge-green">Highest immediate ROI</span>
+      </div>
+      <div class="card" style="border-color:rgba(233,69,96,0.4);background:rgba(233,69,96,0.08);">
+        <h3 style="color:#f87171;font-size:16px;">Path B</h3>
+        <h3 style="color:white;margin-top:4px;font-size:18px;">DTC E-Commerce</h3>
+        <div style="margin:12px 0;height:1px;background:rgba(255,255,255,0.08);"></div>
+        <p style="margin-bottom:10px;">Sell directly to consumers online. Best for cigars, pouches, and accessories — compliant categories only.</p>
+        <ul style="font-size:13px;padding-left:16px;opacity:0.8;margin-bottom:12px;">
+          <li>Best for: retailers or hybrid</li>
+          <li>Timeline: 90–180 days</li>
+          <li>Investment: $50K–$150K</li>
+          <li>ROI: New revenue stream</li>
+        </ul>
+        <span class="badge badge-yellow">Compliance-dependent</span>
+      </div>
+      <div class="card" style="border-color:rgba(16,185,129,0.4);background:rgba(16,185,129,0.08);">
+        <h3 style="color:#34d399;font-size:16px;">Path C</h3>
+        <h3 style="color:white;margin-top:4px;font-size:18px;">Hybrid Model</h3>
+        <div style="margin:12px 0;height:1px;background:rgba(255,255,255,0.08);"></div>
+        <p style="margin-bottom:10px;">B2B portal for retailers + DTC for consumers. Full channel coverage. Requires operational readiness.</p>
+        <ul style="font-size:13px;padding-left:16px;opacity:0.8;margin-bottom:12px;">
+          <li>Best for: established distributors with retail presence</li>
+          <li>Timeline: 6–12 months</li>
+          <li>Investment: $100K–$250K</li>
+          <li>ROI: Maximum long-term upside</li>
+        </ul>
+        <span class="badge badge-blue">Full build</span>
+      </div>
+    </div>
+    <div class="info-needed" style="margin-top:16px;">
+      <strong>⚠️ Info Needed from Topicz</strong>
+      Questionnaire Q1, Q15, Q16, and Q18 will confirm which path is the right starting point based on current revenue mix and internal capacity.
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 6 — B2B PORTAL DEEP DIVE
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-6">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Path A — Deep Dive</div>
+    <div class="s-title">The B2B Self-Service Portal:<br/>The highest-ROI move for distributors</div>
+    <div class="divider"></div>
+    <div class="grid-2" style="margin-top:20px;">
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>The Problem Today</h3>
+          <ul>
+            <li>Phone orders cost <strong>5–10x more</strong> to process than online orders</li>
+            <li>Retailers can only order during business hours</li>
+            <li>Sales reps spend time on order-taking instead of selling</li>
+            <li>No real-time visibility into order patterns or stockouts</li>
+            <li>Manual entry errors create fulfillment problems</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What a Portal Delivers</h3>
+          <ul>
+            <li>Retailers self-order 24/7 — no rep involvement</li>
+            <li>Order frequency typically <strong>increases 20–35%</strong> when self-serve</li>
+            <li>Reps shift from order-takers to account managers</li>
+            <li>Real-time inventory prevents over-ordering</li>
+            <li>Digital order history connects to rebate/scan data systems</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>Recommended Platforms</h3>
+          <ul>
+            <li><strong>OrderJump</strong> — built specifically for tobacco distributors. Integrates with DAC ERP, ManageMore. B2B mobile-first.</li>
+            <li><strong>NetSuite SuiteCommerce</strong> — enterprise-grade B2B portal for larger operations</li>
+            <li><strong>Shopify Plus + B2B</strong> — if already on Shopify ecosystem</li>
+            <li><strong>Custom-built</strong> — when ERP integration requirements are complex</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>ROI Illustration</h3>
+          <ul>
+            <li>If 500 orders/month move from phone → portal</li>
+            <li>At $12 saved per order in labor → <strong>$72K/year saved</strong></li>
+            <li>Plus: 20% order frequency increase on portal accounts</li>
+            <li>Typical payback period: <strong>6–10 months</strong></li>
+          </ul>
+        </div>
+        <div class="info-needed">
+          <strong>⚠️ Info Needed</strong>
+          Current monthly order volume, % via phone/rep, and existing ERP system (Q5, Q16) will allow us to model actual ROI for Topicz.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 7 — DTC DEEP DIVE
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-7">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Path B — Deep Dive</div>
+    <div class="s-title">DTC E-Commerce:<br/>Real runway in compliant categories</div>
+    <div class="divider"></div>
+    <div class="grid-2" style="margin-top:20px;">
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>The Compliant DTC Opportunity</h3>
+          <p style="margin-bottom:8px;">The nicotine pouch category alone is $4B+ and growing at 29.6% annually — with 40% of sales occurring online. Premium cigars and smokeless tobacco have established online markets (cigarsinternational.com is a top US online retailer).</p>
+          <p>The window to build a DTC presence in these categories before the market consolidates is open now. It won't be for long.</p>
+        </div>
+        <div class="card">
+          <h3>What You Need to Launch DTC</h3>
+          <ul>
+            <li>✅ Age verification platform (Veratad, AgeID, or Yoti)</li>
+            <li>✅ High-risk payment processor</li>
+            <li>✅ Adult Signature Required shipping carrier</li>
+            <li>✅ State license & excise tax coverage</li>
+            <li>✅ Geoblocking for unlicensed states</li>
+            <li>✅ COPPA/privacy compliance</li>
+            <li>✅ E-commerce platform (Shopify + tobacco-compliant apps)</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>Platform Recommendations for DTC</h3>
+          <ul>
+            <li><strong>Shopify Plus</strong> — largest app ecosystem, best for tobacco with correct configuration and compliant apps only</li>
+            <li><strong>BigCommerce</strong> — more permissive terms for tobacco vs. Shopify standard</li>
+            <li><strong>WooCommerce</strong> — full control, best for complex compliance integrations</li>
+            <li><strong>Custom</strong> — if ERP integration with DAC/ManageMore is the priority</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>The Cigarsinternational.com Benchmark</h3>
+          <p>Top-ranked US online cigar retailer. Key advantages: deep catalog, age-gated experience, strong SEO, subscription/membership model, and loyalty program. This is the bar for a DTC premium cigar play.</p>
+        </div>
+        <div class="info-needed">
+          <strong>⚠️ Info Needed</strong>
+          Which specific DTC categories is Topicz considering (Q2, Q20)? Current license footprint (Q3, Q4) determines immediate geographic reach.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 8 — BACK-OFFICE FIRST
+════════════════════════════ -->
+<div class="slide slide-accent" id="slide-8">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Critical Foundation</div>
+    <div class="s-title">Fix the back office first.<br/>Online growth amplifies what's broken.</div>
+    <div class="divider"></div>
+    <div class="grid-2" style="margin-top:20px;">
+      <div>
+        <div class="card" style="margin-bottom:14px;border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);">
+          <h3 style="color:#f87171;">If these are broken, don't scale yet</h3>
+          <ul>
+            <li>Inventory management — disconnected online and warehouse = oversells</li>
+            <li>OTP excise tax — multi-state compliance must work before geographic expansion</li>
+            <li>Rebate reconciliation — scaling volume without tracking rebates loses more money</li>
+            <li>Payment processing — scaling on Stripe or PayPal = account termination risk</li>
+            <li>Age verification — non-compliant system = FDA enforcement target</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.08);">
+          <h3 style="color:#34d399;">Tobacco-specific ERP comparison</h3>
+          <table style="width:100%;font-size:12px;margin-top:8px;">
+            <tr style="opacity:0.5;"><td style="padding:4px 8px;"><strong>System</strong></td><td style="padding:4px 8px;"><strong>Best For</strong></td><td style="padding:4px 8px;"><strong>Tobacco Features</strong></td></tr>
+            <tr><td style="padding:4px 8px;">DAC ERP</td><td style="padding:4px 8px;">C-store distributors</td><td style="padding:4px 8px;">MSA, scan data, OTP</td></tr>
+            <tr><td style="padding:4px 8px;">ManageMore</td><td style="padding:4px 8px;">Small-mid distributors</td><td style="padding:4px 8px;">MSA, barcoding, e-com</td></tr>
+            <tr><td style="padding:4px 8px;">NetSuite</td><td style="padding:4px 8px;">Enterprise / complex</td><td style="padding:4px 8px;">Custom modules needed</td></tr>
+            <tr><td style="padding:4px 8px;">QuickBooks</td><td style="padding:4px 8px;">Small retailers</td><td style="padding:4px 8px;">❌ No tobacco features</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Back-office readiness checklist</h3>
+          <ul class="checklist" style="margin-top:8px;">
+            <li><span class="icon">☐</span><span>Real-time inventory connected to online channel</span></li>
+            <li><span class="icon">☐</span><span>ERP generates MSA MULTICAT reports accurately</span></li>
+            <li><span class="icon">☐</span><span>Scan data feeds to all enrolled manufacturers electronically</span></li>
+            <li><span class="icon">☐</span><span>Manufacturer rebate reconciliation is automated or actively managed</span></li>
+            <li><span class="icon">☐</span><span>OTP excise tax calculated correctly in all active states</span></li>
+            <li><span class="icon">☐</span><span>Stamped vs. unstamped inventory tracked separately</span></li>
+            <li><span class="icon">☐</span><span>Promotional allowances and buy-downs tracked per manufacturer agreement</span></li>
+            <li><span class="icon">☐</span><span>High-risk payment processor in place and stable</span></li>
+          </ul>
+          <div class="info-needed">
+            <strong>⚠️ Info Needed</strong>
+            Questionnaire Q5–Q9 will map Topicz's current back-office readiness. This determines whether we start with online growth or back-office stabilization.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 9 — REBATES & SCAN DATA
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-9">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Hidden Revenue Opportunity</div>
+    <div class="s-title">Manufacturer rebates & scan data:<br/>2–5% of revenue sitting unclaimed</div>
+    <div class="divider"></div>
+    <div class="grid-2" style="margin-top:20px;">
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>How Tobacco Rebate Programs Work</h3>
+          <p style="margin-bottom:10px;">Manufacturers (Altria, RJ Reynolds/BAT, Swedish Match) pay distributors and retailers financial incentives for:</p>
+          <ul>
+            <li>Hitting volume targets within a specified period</li>
+            <li>Meeting sales targets for promotional products</li>
+            <li>Ensuring product placement and shelf presence</li>
+            <li>Submitting electronic scan data (POS transaction data)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>The Scan Data Programs</h3>
+          <p style="margin-bottom:10px;">Submitting transaction-level POS data to manufacturers electronically unlocks incremental rebates that aren't available through manual reporting:</p>
+          <ul>
+            <li><strong>Base incentives</strong> — paid for data submission alone</li>
+            <li><strong>Retailer enablement incentives</strong> — for enrolled retail partners</li>
+            <li><strong>Loyalty ID incentives</strong> — when loyalty programs are linked</li>
+            <li><strong>Scan data maintenance incentives</strong> — for consistent, accurate submissions</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.3);">
+          <h3 style="color:#fcd34d;">The Leakage Problem</h3>
+          <p style="margin-bottom:10px;">Most tobacco businesses leave rebates on the table through:</p>
+          <ul style="color:#fcd34d;opacity:0.9;">
+            <li>Missed claim submission windows</li>
+            <li>Manual reconciliation errors on complex agreements</li>
+            <li>Incorrect or incomplete scan data submissions</li>
+            <li>Not being enrolled in all available programs</li>
+            <li>Online sales not feeding into scan data pipeline</li>
+          </ul>
+        </div>
+        <div class="card" style="background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.3);">
+          <h3 style="color:#34d399;">The Online Opportunity</h3>
+          <p>When Topicz adds online sales channels, every online order must feed into the scan data pipeline to capture rebates on those transactions. This requires ERP integration from day one — it can't be retrofitted. We build this into the architecture upfront.</p>
+        </div>
+        <div class="info-needed">
+          <strong>⚠️ Info Needed</strong>
+          Questionnaire Q7–Q8 will confirm whether Topicz is fully capturing current rebates and whether online orders are at risk of falling outside the scan data pipeline.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 10 — COMPLIANCE
+════════════════════════════ -->
+<div class="slide slide-accent" id="slide-10">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Compliance Reality Check</div>
+    <div class="s-title">The four compliance pillars<br/>every online tobacco business must have</div>
+    <div class="divider"></div>
+    <div class="grid-2" style="margin-top:20px;gap:16px;">
+      <div class="card" style="border-left:3px solid #ef4444;background:rgba(239,68,68,0.06);">
+        <h3 style="color:#f87171;">1 — Age Verification</h3>
+        <p style="margin-bottom:8px;"><strong>Requirement:</strong> FDA mandates 21+ verification for all tobacco and nicotine products.</p>
+        <p style="margin-bottom:8px;"><strong>What works:</strong> Third-party digital ID verification (Veratad, AgeID, Yoti) + Adult Signature Required at delivery.</p>
+        <p><strong>What doesn't:</strong> Self-attestation checkboxes. These expose Topicz to enforcement and civil liability.</p>
+      </div>
+      <div class="card" style="border-left:3px solid #f59e0b;background:rgba(245,158,11,0.06);">
+        <h3 style="color:#fcd34d;">2 — PACT Act Shipping Compliance</h3>
+        <p style="margin-bottom:8px;"><strong>ENDS:</strong> USPS, FedEx, and UPS all ban DTC delivery. Only specialized carriers (LaserShip, OnTrac, GSO) with PACT-compliant processes remain.</p>
+        <p style="margin-bottom:8px;"><strong>Cigarettes:</strong> Most states restrict DTC. State-by-state mapping required.</p>
+        <p><strong>Cigars, smokeless, pouches:</strong> Adult Signature Required + carrier age-verification programs. Most viable.</p>
+      </div>
+      <div class="card" style="border-left:3px solid #60a5fa;background:rgba(59,130,246,0.06);">
+        <h3 style="color:#60a5fa;">3 — Payment Processing</h3>
+        <p style="margin-bottom:8px;"><strong>Risk:</strong> Stripe, PayPal, Square explicitly prohibit tobacco. Accounts are terminated without warning — often mid-growth.</p>
+        <p style="margin-bottom:8px;"><strong>Solution:</strong> High-risk specialist processors — Durango, PaymentCloud, Soar Payments, Host Merchant Services. Higher rates (2.5–3.5%) but stable and tobacco-experienced.</p>
+        <p><strong>Setup time:</strong> 1–3 weeks. Do this before launch.</p>
+      </div>
+      <div class="card" style="border-left:3px solid #34d399;background:rgba(16,185,129,0.06);">
+        <h3 style="color:#34d399;">4 — State Licensing & OTP Excise Tax</h3>
+        <p style="margin-bottom:8px;"><strong>Requirement:</strong> Proper licenses + excise tax registration in every state you sell into online. Geoblocking required for unlicensed states.</p>
+        <p style="margin-bottom:8px;"><strong>High-value states to prioritize licensing:</strong> CA, TX, FL, NY, PA, IL. These five states = ~40% of US population.</p>
+        <p><strong>Tool:</strong> TaxJar, Avalara, or tobacco-specific tax software for automated multi-state OTP remittance.</p>
+      </div>
+    </div>
+    <div class="info-needed" style="margin-top:14px;">
+      <strong>⚠️ Info Needed from Topicz</strong>
+      Current payment processor (Q12), age verification method (Q11), state licenses held (Q3, Q13), and PACT Act exposure by product (Q10) will confirm compliance gaps before we design the online channel.
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 11 — DIGITAL MARKETING
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-11">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Marketing Strategy</div>
+    <div class="s-title">The tobacco marketing playbook<br/>is different from every other industry</div>
+    <div class="divider"></div>
+    <div class="grid-2" style="margin-top:20px;">
+      <div>
+        <div class="card" style="border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.06);margin-bottom:14px;">
+          <h3 style="color:#f87171;">❌ What's Restricted or Banned</h3>
+          <ul>
+            <li><strong>Google Ads</strong> — prohibits tobacco products. Accounts running tobacco ads will be suspended.</li>
+            <li><strong>Meta (Facebook/Instagram)</strong> — tobacco and most nicotine products banned from all ad products</li>
+            <li><strong>TikTok</strong> — outright ban on tobacco and nicotine advertising</li>
+            <li><strong>Influencer marketing</strong> — heavily regulated by FTC; must include age-gating</li>
+            <li><strong>Broad social reach campaigns</strong> — most platforms restrict audience targeting for tobacco</li>
+          </ul>
+        </div>
+        <div class="card" style="background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.3);">
+          <h3 style="color:#34d399;">✅ What Works for Tobacco Online</h3>
+          <ul>
+            <li><strong>SEO (organic search)</strong> — the #1 channel. High-intent searches from buyers looking for specific products. Low competition relative to most industries.</li>
+            <li><strong>Email marketing</strong> — highest ROI channel for existing customers. Age-verified opt-in list is a valuable asset.</li>
+            <li><strong>Trade publications</strong> — CSP Daily News, Convenience Store News, Tobacco Business Magazine reach B2B buyers directly.</li>
+            <li><strong>Programmatic display</strong> — adult-verified networks (not Google Display) can reach 21+ audiences</li>
+            <li><strong>Loyalty programs</strong> — drives repeat purchase and connects to scan data rebate programs</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>The SEO Opportunity</h3>
+          <p style="margin-bottom:10px;">Because paid advertising is effectively blocked, organic search is disproportionately valuable for tobacco. Businesses that invest in SEO now build a compounding moat that competitors can't easily buy their way around.</p>
+          <ul>
+            <li><strong>Category pages:</strong> "Buy nicotine pouches online," "premium cigars online"</li>
+            <li><strong>Brand pages:</strong> "Zyn online," "Altoids alternative," specific brand searches</li>
+            <li><strong>Education content:</strong> Buyers research before purchasing. Product guides convert well.</li>
+            <li><strong>Local SEO:</strong> For B2B — "tobacco distributor [state]"</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Email & Loyalty for Existing Customers</h3>
+          <ul>
+            <li>Age-verified email list = gold for tobacco retailers</li>
+            <li>Replenishment reminders increase order frequency 20–35%</li>
+            <li>Loyalty points connected to scan data = double value (customer retention + manufacturer rebates)</li>
+            <li>Reactivation campaigns for lapsed B2B accounts</li>
+          </ul>
+        </div>
+        <div class="info-needed">
+          <strong>⚠️ Info Needed</strong>
+          Q21–Q22 will tell us whether Topicz has an existing email list or CRM to activate, and whether current paid spend is going to channels that may get accounts flagged.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 12 — TECH STACK
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-12">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Technology Architecture</div>
+    <div class="s-title">Recommended tech stack<br/>for a compliant tobacco online business</div>
+    <div class="divider"></div>
+    <div class="grid-3" style="margin-top:20px;gap:14px;">
+      <div class="card">
+        <h3 style="color:#60a5fa;">E-Commerce Platform</h3>
+        <ul style="margin-top:8px;">
+          <li><strong>B2B:</strong> OrderJump (tobacco-native) or NetSuite SuiteCommerce</li>
+          <li><strong>DTC:</strong> Shopify Plus or BigCommerce</li>
+          <li><strong>Budget option:</strong> WooCommerce with custom integrations</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="color:#60a5fa;">Age Verification</h3>
+        <ul style="margin-top:8px;">
+          <li><strong>Veratad</strong> — enterprise, real-time ID verification</li>
+          <li><strong>AgeID</strong> — Shopify-native plugin</li>
+          <li><strong>Yoti</strong> — digital ID wallet approach</li>
+          <li>+ Adult Signature Required (carrier)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="color:#60a5fa;">Payment Processing</h3>
+        <ul style="margin-top:8px;">
+          <li><strong>Durango Merchant Services</strong></li>
+          <li><strong>PaymentCloud</strong></li>
+          <li><strong>Soar Payments</strong></li>
+          <li><strong>Host Merchant Services</strong></li>
+          <li>Rates: 2.5–3.5% + fees. Required.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="color:#34d399;">ERP / Back-Office</h3>
+        <ul style="margin-top:8px;">
+          <li><strong>DAC ERP</strong> (CDR Software) — gold standard for tobacco distributors</li>
+          <li><strong>ManageMore</strong> — strong tobacco distributor features</li>
+          <li>Must integrate with online platform</li>
+          <li>Scan data pipeline required</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="color:#34d399;">Tax & Compliance</h3>
+        <ul style="margin-top:8px;">
+          <li><strong>Avalara</strong> — OTP excise tax automation, multi-state</li>
+          <li><strong>TaxJar</strong> — simpler, lower cost option</li>
+          <li><strong>Geoblocking:</strong> Built into e-commerce platform, driven by license list</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="color:#34d399;">Marketing & CRM</h3>
+        <ul style="margin-top:8px;">
+          <li><strong>Klaviyo</strong> — email + SMS, Shopify-native</li>
+          <li><strong>HubSpot</strong> — B2B CRM for distributor accounts</li>
+          <li><strong>SEO:</strong> Ahrefs for research, Surfer for content</li>
+          <li><strong>Analytics:</strong> GA4 + heatmaps (Hotjar)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-needed" style="margin-top:14px;">
+      <strong>⚠️ Info Needed</strong>
+      Current ERP (Q5), website platform (Q14), CRM (Q22), and order system integration status (Q9) will determine whether this stack needs to be built from scratch or layered onto existing infrastructure.
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 13 — ROADMAP
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-13">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Execution Roadmap</div>
+    <div class="s-title">A phased approach:<br/>Fix, Launch, Scale</div>
+    <div class="divider"></div>
+    <div class="grid-3" style="margin-top:24px;gap:16px;">
+      <div class="phase phase-1">
+        <h4>Phase 1 — Days 1–90</h4>
+        <div style="font-size:15px;font-weight:700;color:white;margin-bottom:12px;">Fix the Foundation</div>
+        <ul>
+          <li>Audit current ERP and back-office against tobacco requirements</li>
+          <li>Identify and plug scan data / rebate capture gaps</li>
+          <li>Confirm state license footprint; identify expansion priorities</li>
+          <li>Switch to compliant high-risk payment processor</li>
+          <li>Implement FDA-compliant age verification</li>
+          <li>Map product categories by online viability (DTC vs B2B vs restricted)</li>
+          <li>Identify platform for B2B portal or DTC store</li>
+        </ul>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:12px;opacity:0.7;">
+          Investment: $15K–$40K | Focus: No new revenue yet. Capture existing leakage first.
+        </div>
+      </div>
+      <div class="phase phase-2">
+        <h4>Phase 2 — Days 90–180</h4>
+        <div style="font-size:15px;font-weight:700;color:white;margin-bottom:12px;">Build &amp; Launch</div>
+        <ul>
+          <li>Launch B2B self-service portal for retail customers (if distributor)</li>
+          <li>Launch DTC store for compliant categories (cigars, pouches, accessories)</li>
+          <li>Connect online orders to ERP and scan data pipeline</li>
+          <li>Geoblock unlicensed states; enroll scan data for all new channels</li>
+          <li>Launch SEO content strategy — category and brand pages</li>
+          <li>Build and segment email list; set up replenishment flows</li>
+          <li>Enroll in all available manufacturer scan data programs</li>
+        </ul>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:12px;opacity:0.7;">
+          Investment: $40K–$120K | Focus: Online channels live and compliant. Revenue starts.
+        </div>
+      </div>
+      <div class="phase phase-3">
+        <h4>Phase 3 — Months 6–12</h4>
+        <div style="font-size:15px;font-weight:700;color:white;margin-bottom:12px;">Optimize &amp; Scale</div>
+        <ul>
+          <li>Expand state license footprint into high-value states (CA, TX, FL)</li>
+          <li>Launch loyalty program connected to scan data rebates</li>
+          <li>Scale SEO with category authority content</li>
+          <li>Activate programmatic advertising on adult-verified networks</li>
+          <li>Add subscription/auto-replenishment for high-frequency SKUs</li>
+          <li>Optimize B2B portal adoption — push remaining phone accounts to self-serve</li>
+          <li>Evaluate new product categories (nicotine pouches, accessories expansion)</li>
+        </ul>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:12px;opacity:0.7;">
+          Investment: $30K–$80K | Focus: Compounding growth. ROI now highly visible.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 14 — INVESTMENT & ROI
+════════════════════════════ -->
+<div class="slide slide-dark" id="slide-14">
+  <div class="slide-inner">
+    <div class="s-eyebrow">Investment Framework</div>
+    <div class="s-title">What to expect to spend —<br/>and what to expect back</div>
+    <div class="divider"></div>
+    <div class="grid-2" style="margin-top:20px;">
+      <div>
+        <table class="data-table" style="margin-bottom:16px;">
+          <thead>
+            <tr><th>Scenario</th><th>Investment Range</th><th>Primary Output</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>B2B Portal Only</strong></td>
+              <td>$25K – $75K</td>
+              <td>Self-serve ordering for retail accounts</td>
+            </tr>
+            <tr>
+              <td><strong>DTC Launch (1–2 categories)</strong></td>
+              <td>$50K – $120K</td>
+              <td>Consumer e-commerce in compliant categories</td>
+            </tr>
+            <tr>
+              <td><strong>Hybrid: B2B + DTC</strong></td>
+              <td>$100K – $250K</td>
+              <td>Full online channel coverage</td>
+            </tr>
+            <tr>
+              <td><strong>Back-office upgrade (ERP)</strong></td>
+              <td>$30K – $150K</td>
+              <td>Foundation for all online growth</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="card" style="background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.3);">
+          <h3 style="color:#34d399;">Rebate capture ROI (often overlooked)</h3>
+          <p>Fixing scan data gaps and rebate reconciliation is typically the fastest payback item — often recovering more than the cost of Phase 1 within the first year. This is pure margin improvement, no new customers required.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>B2B Portal — Illustrative ROI</h3>
+          <ul>
+            <li>300 orders/month migrated from phone → portal</li>
+            <li>Labor savings: $10/order → <strong>$36K/year</strong></li>
+            <li>Order frequency increase (20%): additional volume</li>
+            <li>Portal build cost: $40K → <strong>payback ~13 months</strong></li>
+          </ul>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <h3>DTC — Illustrative Year 1 Revenue</h3>
+          <ul>
+            <li>2,000 monthly unique visitors (SEO, 6-month ramp)</li>
+            <li>2.5% conversion rate on compliant categories</li>
+            <li>$65 average order value</li>
+            <li>= <strong>$1.56M annualized revenue</strong> at scale</li>
+          </ul>
+        </div>
+        <div class="info-needed">
+          <strong>⚠️ Info Needed</strong>
+          Q15 (current revenue split), Q19 (target), Q26 (budget) will allow us to build a Topicz-specific ROI model with real numbers — not industry averages.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 15 — INFORMATION GAPS
+════════════════════════════ -->
+<div class="slide slide-accent" id="slide-15">
+  <div class="slide-inner">
+    <div class="s-eyebrow">What We Need from Topicz</div>
+    <div class="s-title">Information gaps that change<br/>the shape of the strategy</div>
+    <div class="divider"></div>
+    <p style="opacity:0.7;margin-bottom:20px;font-size:14px;">The following unknowns have the highest impact on which path we recommend. All are addressed in the Phase 1 questionnaire.</p>
+    <div class="grid-2" style="gap:14px;">
+      <div>
+        <div class="card" style="border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.07);margin-bottom:12px;">
+          <h3 style="color:#fcd34d;">🔍 Business model clarity (Q1, Q16, Q18)</h3>
+          <p>B2B distributor vs. DTC retailer vs. hybrid — this single answer determines whether Path A, B, or C is the starting point. Without it, any roadmap is speculative.</p>
+        </div>
+        <div class="card" style="border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.07);margin-bottom:12px;">
+          <h3 style="color:#fcd34d;">🔍 Product categories in scope (Q2, Q20)</h3>
+          <p>Which categories Topicz is considering for online growth determines the compliance architecture, platform choice, and which marketing channels are available.</p>
+        </div>
+        <div class="card" style="border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.07);">
+          <h3 style="color:#fcd34d;">🔍 Current ERP and rebate management (Q5–Q8)</h3>
+          <p>If Topicz is on QuickBooks with manual rebate reconciliation, Phase 1 is a back-office upgrade — not an online launch. If on DAC ERP with automated rebate tracking, we can move to Phase 2 immediately.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.07);margin-bottom:12px;">
+          <h3 style="color:#fcd34d;">🔍 Payment processor status (Q12)</h3>
+          <p>If Topicz is currently on Stripe or PayPal, there is an imminent account termination risk that must be addressed before any online growth effort begins. This could be an emergency item.</p>
+        </div>
+        <div class="card" style="border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.07);margin-bottom:12px;">
+          <h3 style="color:#fcd34d;">🔍 State license footprint (Q3, Q4, Q13)</h3>
+          <p>Determines the geographic scope of immediate online opportunity. Expanding into 5–10 high-population states before launch can double the addressable market with minimal incremental investment.</p>
+        </div>
+        <div class="card" style="border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.07);">
+          <h3 style="color:#fcd34d;">🔍 Revenue target and budget (Q19, Q26)</h3>
+          <p>A $500K target requires a very different scope than a $10M target. Budget availability determines whether we sequence aggressively or phased. Without this, any proposal is guesswork.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     SLIDE 16 — NEXT STEPS
+════════════════════════════ -->
+<div class="slide slide-brand" id="slide-16">
+  <div class="slide-inner" style="max-width:740px;">
+    <div class="s-eyebrow">What Happens Next</div>
+    <div class="s-title" style="font-size:clamp(28px,4vw,50px);">This is the beginning<br/>of the roadmap — not the end</div>
+    <div class="divider"></div>
+    <div style="margin-top:28px;display:flex;flex-direction:column;gap:16px;">
+      <div class="card" style="display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,0.07);">
+        <div style="background:var(--accent);border-radius:50%;min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-top:2px;">1</div>
+        <div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px;">Complete the Phase 1 questionnaire</div>
+          <div style="opacity:0.7;font-size:13px;">30 questions tailored to Topicz. Takes ~15 minutes. Fills in the information gaps that change the shape of the strategy.</div>
+          <div style="margin-top:8px;"><a href="./index.html" style="color:var(--accent);font-size:13px;font-weight:600;">→ Open questionnaire</a></div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,0.07);">
+        <div style="background:rgba(255,255,255,0.15);border-radius:50%;min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-top:2px;">2</div>
+        <div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px;">Preliminary analysis delivered within 48 hours</div>
+          <div style="opacity:0.7;font-size:13px;">We review your responses, cross-reference with our research on Topicz's market and competitive position, and develop an initial set of prioritized recommendations before we speak.</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,0.07);">
+        <div style="background:rgba(255,255,255,0.15);border-radius:50%;min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-top:2px;">3</div>
+        <div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px;">Discovery call — 45 minutes</div>
+          <div style="opacity:0.7;font-size:13px;">Walk through the preliminary analysis together. Pressure-test the assumptions. Align on which path — A, B, or C — makes sense for Topicz's situation, resources, and timeline.</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,0.07);">
+        <div style="background:rgba(255,255,255,0.15);border-radius:50%;min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-top:2px;">4</div>
+        <div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:4px;">Phase 2: Full roadmap delivered</div>
+          <div style="opacity:0.7;font-size:13px;">Detailed, Topicz-specific plan with sequenced recommendations, investment ranges, projected ROI, and a 90-day execution plan you can act on immediately.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /slides -->
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  slides[current].classList.add('prev');
+  setTimeout(() => { slides[current].classList.remove('prev'); }, 400);
+  current = Math.max(0, Math.min(n, total - 1));
+  slides[current].classList.add('active');
+  document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+  document.getElementById('progress-bar').style.width = ((current + 1) / total * 100) + '%';
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === total - 1;
+  slides[current].scrollTop = 0;
+}
+
+function nextSlide() { goTo(current + 1); }
+function prevSlide() { goTo(current - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+});
+
+// Touch swipe
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) dx < 0 ? nextSlide() : prevSlide();
+});
+
+// Init
+goTo(0);
+</script>
+
+</body>
+</html>
